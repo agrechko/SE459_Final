@@ -6,5 +6,8 @@ public class Main {
 		System.out.println("hello world");//Rahmo
 		System.out.println("hello world2");
 	}
-
+	public static void print(){
+		
+		System.out.println("hello world");
+	}
 }
