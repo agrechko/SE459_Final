@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1020</x>
+      <y>20</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Package::FatClass
+{Some Properties}
+--
+-id: Long
+_-ClassAttribute: Long_
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>30</y>
+      <w>210</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>_object: Main
+--
+Robot()
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>130</y>
+      <w>320</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>_object: Power
+--
+getremaining()
+updatepower(floorplantypeA, floorplantypeB)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>220</y>
+      <w>340</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>_object: Floorplan
+--
+ArrayList&lt;Cell&gt; [][] readfloorplan()
+writefloorplan(ArrayList&lt;Cell&gt; [][])
+printfloorplan()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>540</x>
+      <y>20</y>
+      <w>420</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>_object: SensorsContoller
+--
+int[x,y] floorplan = Cell()
+--
+getcell(int x, int y)
+void clean(int x, int y)
+boolean isclean(int x, int y)
+void setpaths(int x, int y, int[])
+int[] getpaths(int x, int y)
+void setsurface(int x, int y, int value)
+void int getsurface(int x, int y)
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>590</x>
+      <y>220</y>
+      <w>300</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>_object: Robot
+--
+senors
+--
+execute() 
+int [0] sensors.getpaths(int x, int y)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>430</y>
+      <w>210</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>_object: Cell
+--
+int surface
+int dirt
+int[] paths
+bolean chargingstation
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
