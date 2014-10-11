@@ -52,4 +52,10 @@ public class SensorsController
 		
 	}
 	
+	//TODO
+	public boolean isAllClean()
+	{
+		return false;
+	}
+	
 }
