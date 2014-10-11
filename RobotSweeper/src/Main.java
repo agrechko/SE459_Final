@@ -1,13 +1,13 @@
+import robot.RobotController;
+import sensors.SensorsController;
 
-public class Main {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("hello world");//Rahmo
-		System.out.println("hello world2");
-	}
-	public static void print(){
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		SensorsController sensors = new SensorsController(args[0]);
+		RobotController robot = new RobotController(sensors);
 		
-		System.out.println("hello world");
 	}
 }
