@@ -14,7 +14,8 @@ public class RobotController
 		READY_TO_CLEAN(1), 
 		CLEANING(2),
 		CHARGING(3),
-		GOING_HOME(4);
+		GOING_HOME(4),
+		EXPLORING(5);
 		
 		private int value;
 		
@@ -42,10 +43,27 @@ public class RobotController
 		{
 			if(State.READY_TO_CLEAN.getValue() == currentState)
 			{
-				
+				new ReadyToCleanState().execute(this);
+			}
+			else if(State.EXPLORING.getValue() == currentState)
+			{
+				new ExploringState().execute(this);
+			}
+			else if(State.CLEANING.getValue() == currentState)
+			{
+				new CleaningState().execute(this);
+			}
+			else if(State.CHARGING.getValue() == currentState)
+			{
+				//not yet implemented
+			}
+			else if(State.GOING_HOME.getValue() == currentState)
+			{
+				new GoingHomeState().execute(this);
 			}
 			else if (State.STOP.getValue() == currentState)
 			{
+				new StopState().execute(this);
 				break;
 			}
 		}	
