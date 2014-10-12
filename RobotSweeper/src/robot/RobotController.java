@@ -1,13 +1,22 @@
 package robot;
 
+import java.util.Stack;
+
 import sensors.SensorsController;
 
 public class RobotController
 {
 	SensorsController sensors;
+	DirtController dirtController;
 	int currentState = State.READY_TO_CLEAN.getValue();
-	int currentPower;
-	int currentDirtCapacity;
+	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
+	int maxPower;
+	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
+	int currentX;
+	int currentY;
+	
+	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
+	Stack<Integer> route = new Stack<Integer>();
 	
 	enum State{
 		STOP(0),
@@ -29,18 +38,23 @@ public class RobotController
         }
 	}
 	
-	public RobotController(SensorsController sensors, DirtController dirtController, int maxPower, int maxDirtCapacity)
+	public RobotController(SensorsController sensors, DirtController dirtController, int maxPower, int maxDirtCapacity, int startX, int startY)
 	{
 		this.sensors = sensors;
 		this.currentPower = maxPower;
+		this.maxPower = maxPower;
 		this.currentDirtCapacity = maxDirtCapacity;
+		this.dirtController = dirtController;
+		this.currentX = startX;
+		this.currentY = startY;
 	}
 	
 	//controlls execution state
-	public void execute()
+	public void execute() throws Exception
 	{
 		while(true)
 		{
+			System.out.println("power: " + currentPower);
 			if(State.READY_TO_CLEAN.getValue() == currentState)
 			{
 				new ReadyToCleanState().execute(this);
@@ -55,7 +69,7 @@ public class RobotController
 			}
 			else if(State.CHARGING.getValue() == currentState)
 			{
-				//not yet implemented
+				throw new Exception("Charging state is not implemented yet");
 			}
 			else if(State.GOING_HOME.getValue() == currentState)
 			{
@@ -70,9 +84,8 @@ public class RobotController
 	}
 	
 	//change robot state
-	public void setState(State state)
+	public void setState(int state)
 	{
-		currentState = state.getValue();
+		currentState = state;
 	}
-	
 }
