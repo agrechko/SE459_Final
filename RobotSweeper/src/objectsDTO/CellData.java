@@ -6,7 +6,21 @@ public class CellData
 	int dirt;
 	int[] paths;
 	boolean chargingStation;
+	int cellX;
+	int cellY;
 
+	public int getCellX() {
+		return cellX;
+	}
+	public void setCellX(int cellX) {
+		this.cellX = cellX;
+	}
+	public int getCellY() {
+		return cellY;
+	}
+	public void setCellY(int cellY) {
+		this.cellY = cellY;
+	}
 	public int getSurface() {
 		return surface;
 	}
