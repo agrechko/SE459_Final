@@ -1,6 +1,6 @@
 <home>
 <floor level ='1'>
-<! -- Guest Bedroom A -->
+<!-- Guest Bedroom A -->
 <cell xs='0' ys='0' ss='2' ps='1212 ' ds='1' cs='1' />
 <cell xs='1' ys='0' ss='2' ps='1112 ' ds='1' cs='0' />
 <cell xs='2' ys='0' ss='2' ps='1112 ' ds='1' cs='0' />
@@ -21,7 +21,7 @@
 <cell xs='1' ys='4' ss='2' ps='1121 ' ds='1' cs='0' />
 <cell xs='2' ys='4' ss='2' ps='1121 ' ds='1' cs='0' />
 <cell xs='3' ys='4' ss='2' ps='2121 ' ds='1' cs='0' />
-<! -- Hallway -->
+<!-- Hallway -->
 <cell xs='4' ys='0' ss='1' ps='1214 ' ds='2' cs='0' />
 <cell xs='5' ys='0' ss='1' ps='2112 ' ds='1' cs='0' />
 <cell xs='4' ys='1' ss='1' ps='1211 ' ds='2' cs='0' />
@@ -38,7 +38,7 @@
 <cell xs='5' ys='6' ss='1' ps='2111 ' ds='1' cs='0' />
 <cell xs='4' ys='7' ss='1' ps='1121 ' ds='2' cs='0' />
 <cell xs='5' ys='7' ss='1' ps='1121 ' ds='3' cs='0' />
-<! -- Guest Bedroom B -->
+<!-- Guest Bedroom B -->
 <cell xs='0' ys='7' ss='2' ps='1212 ' ds='1' cs='0' />
 <cell xs='1' ys='7' ss='2' ps='1112 ' ds='1' cs='0' />
 <cell xs='2' ys='7' ss='2' ps='1112 ' ds='1' cs='0' />
@@ -51,7 +51,7 @@
 <cell xs='1' ys='9' ss='2' ps='1121 ' ds='1' cs='0' />
 <cell xs='2' ys='9' ss='2' ps='1121 ' ds='1' cs='0' />
 <cell xs='3' ys='9' ss='2' ps='2121 ' ds='1' cs='0' />
-<! -- Master Bedroom -->
+<!-- Master Bedroom -->
 <cell xs='6' ys='0' ss='1' ps='1212 ' ds='1' cs='0' />
 <cell xs='7' ys='0' ss='1' ps='1112 ' ds='1' cs='0' />
 <cell xs='8' ys='0' ss='1' ps='1112 ' ds='1' cs='0' />
@@ -84,5 +84,5 @@
 <cell xs='7' ys='7' ss='1' ps='2111 ' ds='1' cs='0' />
 <cell xs='6' ys='8' ss='1' ps='1221 ' ds='1' cs='0' />
 <cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
-</ floor >
-</ home >
+</floor >
+</home >
