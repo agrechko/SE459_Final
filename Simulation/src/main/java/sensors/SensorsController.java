@@ -7,7 +7,7 @@ import objectsDTO.CellData;
 public class SensorsController 
 {
 	FloorPlan floorplan;
-	public SensorsController(String floorPlanPath) throws IOException //TODO 
+	public SensorsController(String floorPlanPath) throws IOException  
 	{
 		floorplan = new FloorPlan(floorPlanPath);
 	}
@@ -15,18 +15,18 @@ public class SensorsController
 	//returns the celldata object of current cell of x and y
 	public CellData getCell(int x, int y)
 	{
-		int[] coordinator = new int[] {x,y};
+		int[] xy = new int[] {x,y};
 		CellData cd = new CellData();
-		cd = floorplan.grid.get(coordinator);
+		cd = floorplan.grid.get(xy);
 		return cd;
 	}
 	
 	//this takes in current cell and it returns the surrounding cells status 1: open, 2: obstical, 4: stairs  
 	public int[] getPaths(int x, int y)
 	{
-		int[] coordinator = new int[] {x,y};
+		int[] xy = new int[] {x,y};
 		CellData cd = new CellData();
-		cd = floorplan.grid.get(coordinator);
+		cd = floorplan.grid.get(xy);
 		return cd.getPaths();   //TODO Need to make sure of the principle of this...
 		
 //		
@@ -44,18 +44,22 @@ public class SensorsController
 	}
 	
 	//this sets the surrounding coordinates of the current location  //TODO
-	private void setPaths(int[] paths)  // I add x and y so I can know where is the current location?
+	private void setPaths(int x, int y,int[] paths)// Rahmo:I think we should add x and y so we can know where is the current location?
 	{
 	//TODO	
+		int[] xy = new int[] {x,y};
+		CellData cd = new CellData();
+		cd = floorplan.grid.get(xy);
+		cd.setPaths(paths);
 		
 	}
 	
 	//this method cleans 1 unit of dirt from the given location
 	public void clean(int x, int y)
 	{
-		int[] coordinator = new int[] {x,y};
+		int[] xy = new int[] {x,y};
 		CellData cd = new CellData();
-		cd = floorplan.grid.get(coordinator);
+		cd = floorplan.grid.get(xy);
 		 int CurrentDirt = cd.getDirt();
 		 int NewDirt = CurrentDirt - 1;
 		 cd.setDirt(NewDirt);
@@ -65,9 +69,9 @@ public class SensorsController
 	//this method return if the current location is clean or not
 	public boolean isClean(int x, int y)
 	{
-		int[] coordinator = new int[] {x,y};
+		int[] xy = new int[] {x,y};
 		CellData cd = new CellData();
-		cd = floorplan.grid.get(coordinator);
+		cd = floorplan.grid.get(xy);
 		int CurrentDirt = cd.getDirt();
 		if (CurrentDirt == 0 ){
 		return true;
@@ -80,19 +84,18 @@ public class SensorsController
 	//this method returns an int 1: bare floor, 2: low carpet, 4: high carpet
 	public int getSurface(int x, int y)
 	{
-		int[] coordinator = new int[] {x,y};
+		int[] xy = new int[] {x,y};
 		CellData cd = new CellData();
-		cd = floorplan.grid.get(coordinator);
+		cd = floorplan.grid.get(xy);
 		return cd.getSurface();
 	}
 	
 	//this method sets the surface for current location surface value are 1: bare floor, 2: low carpet, 3: high carpet
 	public void setSurface(int x, int y, int surfaceValue)
 	{
-		
-		int[] coordinator = new int[] {x,y};
+		int[] xy = new int[] {x,y};
 		CellData cd = new CellData();
-		cd = floorplan.grid.get(coordinator);
+		cd = floorplan.grid.get(xy);
 		cd.setSurface(surfaceValue);
 		
 	}
@@ -105,7 +108,6 @@ public class SensorsController
 			 for(Map.Entry<int[], CellData> block  : floorplan.grid.entrySet()){
 				CellData cd = new CellData ();
 				cd = block.getValue();
-				
 				int CurrentDirt = cd.getDirt();
 				if (CurrentDirt == 0 ){
 					Status= true;
@@ -118,12 +120,15 @@ public class SensorsController
 }
 		//TODO
 	public CellData getChargingStationLocation()
-	{
-		CellData cd = new CellData();
-		cd.setCellX(0);
-		cd.setCellY(0);
-		cd.setChargingStation(true);
+{
+	CellData cd = new CellData ();
+	for(Map.Entry<int[], CellData> block  :floorplan.grid.entrySet()){
+		cd = block.getValue();
+	if (cd.isChargingStation() == true) 
+	 {
 		return cd;
+	  } 
 	}
-	
+return cd;
+}
 }

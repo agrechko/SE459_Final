@@ -19,11 +19,11 @@ import javax.xml.stream.XMLStreamReader;
 
 public class FloorPlan {
 	
-	Logger log;
-	LogFactory logger;
-	FileInputStream inputfile;
-	String xmlfilename;
-	HashMap<int[], CellData> grid = new HashMap<int[], CellData>(); //the full floor plan grid that is read in from the xml
+   private Logger log;
+   private LogFactory logger;
+   private FileInputStream inputfile;
+   private 	String xmlfilename;
+    HashMap<int[], CellData> grid = new HashMap<int[], CellData>(); //the full floor plan grid that is read in from the xml
 
 //	ArrayList<ArrayList<CellData>> grid; 
 //	ArrayList<ArrayList<CellData>> sweeperMemoryGrid;//the floor plan the sweeper encounters
