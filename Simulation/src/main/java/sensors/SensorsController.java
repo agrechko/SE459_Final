@@ -1,5 +1,6 @@
 package sensors;
 
+import java.io.IOException;
 import java.util.Random;
 
 import objectsDTO.CellData;
@@ -7,15 +8,18 @@ import objectsDTO.CellData;
 public class SensorsController 
 {
 	FloorPlan floorplan;
-	public SensorsController(String floorPlanPath)
+	public SensorsController(String floorPlanPath) throws IOException //TODO 
 	{
-		//floorplan = new FloorPlan(floorPlanPath);
+		floorplan = new FloorPlan(floorPlanPath);
 	}
 	
 	//returns the celldata object of current cell of x and y
 	public CellData getCell(int x, int y)
 	{
-		return null;
+		int[] coordinator = new int[] {x,y};
+		CellData cd = new CellData();
+		cd = floorplan.grid.get(coordinator);
+		return cd;
 	}
 	
 	//this takes in current cell and it returns the surrounding cells status 1: open, 2: obstical, 4: stairs  
