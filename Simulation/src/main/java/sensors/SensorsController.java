@@ -22,12 +22,12 @@ public class SensorsController
 	}
 	
 	//this takes in current cell and it returns the surrounding cells status 1: open, 2: obstical, 4: stairs  
-	public int[] getPaths(int x, int y)
+	public int[] getPaths(int x, int y)   
 	{
 //		int[] xy = new int[] {x,y};
 //		CellData cd = new CellData();
 //		cd = floorplan.grid.get(xy);
-//		return cd.getPaths();   //TODO Need to make sure of the principle of this...
+//		return cd.getPaths();   //TODO Test this
 		return floorplan.grid.get(new Coord(x, y)).getPaths();
 		
 //		
@@ -68,7 +68,7 @@ public class SensorsController
 	}
 	
 	//this method return if the current location is clean or not
-	public boolean isClean(int x, int y)
+	public boolean isClean(int x, int y) //TODO Test this
 	{
 //		int[] xy = new int[] {x,y};
 //		CellData cd = new CellData();
