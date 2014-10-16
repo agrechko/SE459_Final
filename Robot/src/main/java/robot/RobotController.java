@@ -14,6 +14,7 @@ public class RobotController
 	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
 	int currentX;
 	int currentY;
+	int wentBackFrom = -1;
 	
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();

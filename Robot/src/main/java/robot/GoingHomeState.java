@@ -9,16 +9,16 @@ public class GoingHomeState implements RobotStates
 		//1: x pos, 2: x neg, 3: y pos, 4: y neg
 		int prevStep = robot.route.pop();
 		switch(prevStep){
-		case 1:
+		case 0:
 			robot.currentX -= 1;
 			break;
-		case 2:
+		case 1:
 			robot.currentX += 1;
 			break;
-		case 3:
+		case 2:
 			robot.currentY -= 1;
 			break;
-		case 4:
+		case 3:
 			robot.currentY += 1;
 			break;
 		}

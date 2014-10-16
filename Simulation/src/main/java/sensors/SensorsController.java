@@ -15,6 +15,13 @@ public class SensorsController
 		floorplan = new FloorPlan(floorPlanPath);
 	}
 	
+	//this method checks if the given location x and y on the sweepers has been visited
+	public boolean isVisited(int x, int y)
+	{
+		//TODO Do not implement this method without discussion. This might be moved under robot
+		return false;
+	}
+	
 	//returns the celldata object of current cell of x and y
 	public CellData getCell(int x, int y)
 	{
@@ -30,18 +37,20 @@ public class SensorsController
 //		return cd.getPaths();   //TODO Test this
 		return floorplan.grid.get(new Coord(x, y)).getPaths();
 		
-//		
 //		Random gen = new Random();
-//		int i = gen.nextInt(4);
+//		int i = gen.nextInt(6);
 //		if(i == 0)
 //			return new int[]{1,2,2,2};
 //		else if(i == 1)
 //			return new int[]{2,1,2,2};
 //		else if(i == 2)
 //			return new int[]{2,2,1,2};
-//		else
+//		else if (i == 3)
 //			return new int[]{2,2,2,1};
-		
+//		else if(i == 4)
+//			return new int[]{1,2,2,1};
+//		else 
+//			return new int[]{1,2,1,1};
 	}
 	
 	//this sets the surrounding coordinates of the current location  //TODO
