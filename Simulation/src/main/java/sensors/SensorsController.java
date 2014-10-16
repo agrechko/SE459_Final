@@ -2,7 +2,10 @@ package sensors;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import objectsDTO.CellData;
+import objectsDTO.Coord;
 
 public class SensorsController 
 {
@@ -15,10 +18,7 @@ public class SensorsController
 	//returns the celldata object of current cell of x and y
 	public CellData getCell(int x, int y)
 	{
-		int[] xy = new int[] {x,y};
-		CellData cd = new CellData();
-		cd = floorplan.grid.get(xy);
-		return cd;
+		return floorplan.grid.get(new Coord(x, y));
 	}
 	
 	//this takes in current cell and it returns the surrounding cells status 1: open, 2: obstical, 4: stairs  
@@ -44,7 +44,7 @@ public class SensorsController
 	}
 	
 	//this sets the surrounding coordinates of the current location  //TODO
-	private void setPaths(int x, int y,int[] paths)// Rahmo:I think we should add x and y so we can know where is the current location?
+	private void setPaths(int x, int y, int[] paths)// Rahmo:I think we should add x and y so we can know where is the current location?
 	{
 	//TODO	
 		int[] xy = new int[] {x,y};
@@ -94,8 +94,8 @@ public class SensorsController
 	public void setSurface(int x, int y, int surfaceValue)
 	{
 		int[] xy = new int[] {x,y};
-		CellData cd = new CellData();
-		cd = floorplan.grid.get(xy);
+//		CellData cd = new CellData();
+		CellData cd = floorplan.grid.get(xy);
 		cd.setSurface(surfaceValue);
 		
 	}
@@ -105,9 +105,9 @@ public class SensorsController
 	{
           Boolean Status = false; 
 			
-			 for(Map.Entry<int[], CellData> block  : floorplan.grid.entrySet()){
-				CellData cd = new CellData ();
-				cd = block.getValue();
+			 for(Coord xy: floorplan.grid.keySet()){
+				CellData cd = floorplan.grid.get(xy);
+//				cd = block.getValue();
 				int CurrentDirt = cd.getDirt();
 				if (CurrentDirt == 0 ){
 					Status= true;
@@ -116,19 +116,18 @@ public class SensorsController
 					Status = false; 
 				     }
 		        }
-	return Status;
-}
-		//TODO
-	public CellData getChargingStationLocation()
-{
-	CellData cd = new CellData ();
-	for(Map.Entry<int[], CellData> block  :floorplan.grid.entrySet()){
-		cd = block.getValue();
-	if (cd.isChargingStation() == true) 
-	 {
-		return cd;
-	  } 
+		return Status;
 	}
-return cd;
-}
+
+	public CellData getChargingStationLocation() {
+		CellData cd = new CellData ();
+		for(Coord xy: floorplan.grid.keySet()){
+			cd = floorplan.grid.get(xy);
+			if (cd.isChargingStation() == true) 
+			 {
+				return cd;
+			  } 
+			}
+			return cd;
+	}
 }

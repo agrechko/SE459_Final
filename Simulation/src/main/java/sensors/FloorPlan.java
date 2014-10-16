@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.logging.*;
 
 import objectsDTO.CellData;
+import objectsDTO.Coord;
 
 import java.util.ArrayList;
 import java.io.File;
@@ -23,14 +24,14 @@ public class FloorPlan {
    private LogFactory logger;
    private FileInputStream inputfile;
    private 	String xmlfilename;
-    HashMap<int[], CellData> grid = new HashMap<int[], CellData>(); //the full floor plan grid that is read in from the xml
+   HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); //the full floor plan grid that is read in from the xml
 
 //	ArrayList<ArrayList<CellData>> grid; 
 //	ArrayList<ArrayList<CellData>> sweeperMemoryGrid;//the floor plan the sweeper encounters
 
 	public FloorPlan() throws IOException {
 	    log = new LogFactory().generateLog();
-	    createInputFleStream();
+	    createInputFileStream();
 	}
 	
 	//Sample floorplan, floorPlanLocation is the physical drive location
@@ -71,16 +72,16 @@ public class FloorPlan {
 //		 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
 					if (reader.getLocalName().equalsIgnoreCase("cell")) {
 						CellData cd = new CellData();
-						int[] xy = new int[2];
+						Coord xy = new Coord();
 						int ac = reader.getAttributeCount();
 						for (int i=0; i < ac; i++) {
 							String atName = reader.getAttributeLocalName(i);
 							Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
 							log.info("ATTRIBUTE: " + atName + ", " + atValue);
 							switch(reader.getAttributeLocalName(i)) {
-								case "xs": xy[0] =  atValue;
+								case "xs": xy.setx(atValue);
 								break;
-								case "ys": xy[1] =  atValue;
+								case "ys": xy.sety(atValue);
 								break;
 								case "ss": cd.setSurface(atValue);
 								break;
@@ -116,7 +117,7 @@ public class FloorPlan {
 	}
 	
 	//write arraylist to xml to file
-	public HashMap<int[], CellData> read() throws FileNotFoundException, XMLStreamException {
+	public HashMap<Coord, CellData> read() throws FileNotFoundException, XMLStreamException {
 		xml2map();
 		return grid;
 	}
@@ -133,14 +134,14 @@ public class FloorPlan {
 	}
 
 
-//	public static void main(String[] args) throws XMLStreamException {
-//		try {
-//			FloorPlan f = new FloorPlan("sample_floorplan.xml");
-//			HashMap<int[], CellData> g = f.read();
-//			System.out.println(g);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	public static void main(String[] args) throws XMLStreamException {
+		try {
+			FloorPlan f = new FloorPlan("sample_floorplan.xml");
+			HashMap<Coord, CellData> g = f.read();
+			System.out.println(g);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
