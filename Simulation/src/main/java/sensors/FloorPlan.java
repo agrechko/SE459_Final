@@ -77,13 +77,18 @@ public class FloorPlan {
 						for (int i=0; i < ac; i++) {
 							String atName = reader.getAttributeLocalName(i);
 							Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
-							log.info("ATTRIBUTE: " + atName + ", " + atValue);
+							log.info( "ATTRIBUTE: " + atName + ", " + atValue);
 							switch(reader.getAttributeLocalName(i)) {
-								case "xs": xy.setx(atValue);
+								case "xs": 
+									xy.setx(atValue);
+									cd.setCellX(atValue);
 								break;
-								case "ys": xy.sety(atValue);
+								case "ys": 
+									xy.sety(atValue);
+  								    cd.setCellY(atValue);
 								break;
-								case "ss": cd.setSurface(atValue);
+								case "ss": 
+									cd.setSurface(atValue);
 								break;
 								case "ps":								   
 									int count = 0;
@@ -94,14 +99,19 @@ public class FloorPlan {
 									}
 									cd.setPaths(a);
 								break;
-								case "ds": cd.setDirt(atValue);
+								case "ds": 
+									cd.setDirt(atValue);
 								break;							
 								case "cs": 
-									if (atValue.equals("0")) cd.setChargingStation(false);
-									else cd.setChargingStation(true);
+									if (atValue.equals("0")) {
+										cd.setChargingStation(false);
+									} else {
+										cd.setChargingStation(true);
+									}
 								break;								
 							}							
 						}
+//						log.info(xy.getx() + ":" + xy.gety());
 						grid.put(xy, cd);
 					}
 					break;			
@@ -138,7 +148,20 @@ public class FloorPlan {
 		try {
 			FloorPlan f = new FloorPlan("sample_floorplan.xml");
 			HashMap<Coord, CellData> g = f.read();
-			System.out.println(g);
+			Coord a = new Coord(0,0);
+			Coord b = new Coord(0,0);
+			if (a.equals(b)) {
+				System.out.println("True");
+			} else {
+				System.out.println("False");
+			}
+//			System.out.println(g.get(a));
+			for (Coord c: g.keySet()) {
+				CellData xy = g.get(c);
+				if (xy.getCellX() == 0 && xy.getCellY() == 0) {
+					System.out.println(c.getx() + ":" + c.gety());
+				}
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

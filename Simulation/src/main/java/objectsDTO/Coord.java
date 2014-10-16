@@ -27,13 +27,16 @@ public class Coord {
 		return y;
 	}
 
-	public boolean equals(Coord c) {
+	public boolean equals(Object c) {
 		if (c == null) {
 		    return false;	
-		} else if ((this.x == c.x) && (this.y == c.y)) {
-			return true;
 		} else {
-			return false;
+			Coord temp = (Coord) c;
+			if ((this.x == temp.x) && (this.y == temp.y)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 	
