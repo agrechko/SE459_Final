@@ -136,7 +136,6 @@ public class FloorPlan {
 
 	public static void main(String[] args) throws XMLStreamException {
 		try {
-//			FloorPlan f = new FloorPlan("C://Users/user1930/git/SE459_Final2/Simulation/sample_floorplan.xml");
 			FloorPlan f = new FloorPlan("sample_floorplan.xml");
 			HashMap<Coord, CellData> g = f.read();
 			System.out.println(g);
