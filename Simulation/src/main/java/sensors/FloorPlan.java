@@ -8,21 +8,27 @@ import objectsDTO.Coord;
 
 import java.util.ArrayList;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import utils.LogFactory;
 
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
 public class FloorPlan {
 	
    private Logger log;
    private LogFactory logger;
    private FileInputStream inputfile;
+   private final static String outputfile = "floorplan.xml";
    private 	String xmlfilename;
    HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); //the full floor plan grid that is read in from the xml
 
@@ -59,7 +65,48 @@ public class FloorPlan {
 
 	}	
 	
-	
+    private CellData parseAttributes(XMLStreamReader reader) {
+		CellData cd = new CellData();
+		int ac = reader.getAttributeCount();
+		for (int i=0; i < ac; i++) {
+			String atName = reader.getAttributeLocalName(i);
+			Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
+// 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
+			log.info( "ATTRIBUTE: " + atName + ", " + atValue);
+			switch(atName) {
+				case "xs": 
+					cd.setCellX(atValue);
+				break;
+				case "ys": 
+				    cd.setCellY(atValue);
+				break;
+				case "ss": 
+					cd.setSurface(atValue);
+				break;
+				case "ps":								   
+					int count = 0;
+					int[] a = new int[4];
+					for (char c: String.valueOf(atValue).toCharArray()) {
+						a[count] = Character.getNumericValue(c);
+						count++;
+					}
+					cd.setPaths(a);
+				break;
+				case "ds": 
+					cd.setDirt(atValue);
+				break;							
+				case "cs": 
+					if (atValue.equals("0")) {
+						cd.setChargingStation(false);
+					} else {
+						cd.setChargingStation(true);
+					}
+				break;
+			}
+		}
+		return cd;
+	}							
+
 	private void xml2map() throws XMLStreamException, FileNotFoundException {
 		XMLInputFactory factory = XMLInputFactory.newInstance();
 	 	XMLStreamReader reader;
@@ -68,54 +115,13 @@ public class FloorPlan {
 			while (reader.hasNext()) {
 				int event = reader.next();
 				switch(event) {
-		 		case XMLStreamConstants.START_ELEMENT:
-//		 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
-					if (reader.getLocalName().equalsIgnoreCase("cell")) {
-						CellData cd = new CellData();
-						Coord xy = new Coord();
-						int ac = reader.getAttributeCount();
-						for (int i=0; i < ac; i++) {
-							String atName = reader.getAttributeLocalName(i);
-							Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
-							log.info( "ATTRIBUTE: " + atName + ", " + atValue);
-							switch(reader.getAttributeLocalName(i)) {
-								case "xs": 
-									xy.setx(atValue);
-									cd.setCellX(atValue);
-								break;
-								case "ys": 
-									xy.sety(atValue);
-  								    cd.setCellY(atValue);
-								break;
-								case "ss": 
-									cd.setSurface(atValue);
-								break;
-								case "ps":								   
-									int count = 0;
-									int[] a = new int[4];
-									for (char c: String.valueOf(atValue).toCharArray()) {
-										a[count] = Character.getNumericValue(c);
-										count++;
-									}
-									cd.setPaths(a);
-								break;
-								case "ds": 
-									cd.setDirt(atValue);
-								break;							
-								case "cs": 
-									if (atValue.equals("0")) {
-										cd.setChargingStation(false);
-									} else {
-										cd.setChargingStation(true);
-									}
-								break;								
-							}							
+			 		case XMLStreamConstants.START_ELEMENT:
+						if (reader.getLocalName().equalsIgnoreCase("cell")) {
+							CellData cd = parseAttributes(reader);
+							grid.put(new Coord(cd.getCellX(), cd.getCellY()), cd);
 						}
-//						log.info(xy.getx() + ":" + xy.gety());
-						grid.put(xy, cd);
-					}
 					break;			
-				case XMLStreamConstants.END_ELEMENT:
+					case XMLStreamConstants.END_ELEMENT:
 					break;
 				}
 			}
@@ -126,6 +132,37 @@ public class FloorPlan {
 		
 	}
 	
+	private void map2xml() throws XMLStreamException, FileNotFoundException {
+		XMLOutputFactory xof =  XMLOutputFactory.newInstance();
+		XMLStreamWriter xtw = null;
+		try {
+			xtw = xof.createXMLStreamWriter(new FileWriter(outputfile));
+			xtw.writeStartDocument("utf-8","1.0");
+			xtw.writeStartElement("http://www.w3.org/TR/REC-html40", "home");
+			xtw.writeStartElement("http://www.w3.org/TR/REC-html40", "floor");
+			xtw.writeAttribute("level", "1");
+			for (Coord c: grid.keySet()) {
+				CellData cd = grid.get(c);
+//	 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
+				xtw.writeStartElement("http://www.w3.org/TR/REC-html40", "cell");
+				xtw.writeAttribute("xs", Integer.toString(cd.getCellX()));
+				xtw.writeAttribute("ys", Integer.toString(cd.getCellY()));
+				xtw.writeAttribute("ss", Integer.toString(cd.getSurface()));
+				xtw.writeAttribute("ps", cd.getPaths().toString());
+				xtw.writeAttribute("ds", Integer.toString(cd.getDirt()));
+				if (cd.isChargingStation()) {
+					xtw.writeAttribute("cs", "1");	
+				} else {
+					xtw.writeAttribute("cs", "0");
+				}
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	//write arraylist to xml to file
 	public HashMap<Coord, CellData> read() throws FileNotFoundException, XMLStreamException {
 		xml2map();
@@ -135,7 +172,12 @@ public class FloorPlan {
 	
 	//write arraylist to xml to file
 	public void write(ArrayList<ArrayList<CellData>> grid) {
-		
+		try {
+			map2xml();
+		} catch (FileNotFoundException | XMLStreamException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//prints arraylist to console
@@ -155,11 +197,15 @@ public class FloorPlan {
 			} else {
 				System.out.println("False");
 			}
-//			System.out.println(g.get(a));
+//			CellData xy = g.get(new Coord(1,2));
+//			System.out.println(xy.getCellX());
 			for (Coord c: g.keySet()) {
-				CellData xy = g.get(c);
-				if (xy.getCellX() == 0 && xy.getCellY() == 0) {
+				CellData xy1 = g.get(c);
+				CellData xy2 = g.get(a);
+				if (xy1.getCellX() == 0 && xy1.getCellY() == 0) {
+					System.out.println(a.equals(c));
 					System.out.println(c.getx() + ":" + c.gety());
+					System.out.println(xy2);
 				}
 			}
 		} catch (IOException e) {
