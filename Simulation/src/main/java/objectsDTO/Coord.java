@@ -40,7 +40,7 @@ public class Coord {
 		}
 	}
 	
-	public int hashcode() {
+	public int hashCode() {
 		return ((17 * 31 + x) * 31) + y;
 	}
 }
