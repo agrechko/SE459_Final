@@ -133,30 +133,41 @@ public class FloorPlan {
 	}
 	
 	private void map2xml() throws XMLStreamException, FileNotFoundException {
-		XMLOutputFactory xof =  XMLOutputFactory.newInstance();
+		XMLOutputFactory xof = XMLOutputFactory.newInstance();
 		XMLStreamWriter xtw = null;
 		try {
 			xtw = xof.createXMLStreamWriter(new FileWriter(outputfile));
-			xtw.writeStartDocument("utf-8","1.0");
-			xtw.writeStartElement("http://www.w3.org/TR/REC-html40", "home");
-			xtw.writeStartElement("http://www.w3.org/TR/REC-html40", "floor");
+//			xtw = xof.createXMLStreamWriter(System.out);
+			xtw.writeStartDocument("1.0");
+			xtw.writeStartElement("home");
+			xtw.writeStartElement("floor");
 			xtw.writeAttribute("level", "1");
 			for (Coord c: grid.keySet()) {
 				CellData cd = grid.get(c);
 //	 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
-				xtw.writeStartElement("http://www.w3.org/TR/REC-html40", "cell");
+				xtw.writeStartElement("cell");
 				xtw.writeAttribute("xs", Integer.toString(cd.getCellX()));
 				xtw.writeAttribute("ys", Integer.toString(cd.getCellY()));
 				xtw.writeAttribute("ss", Integer.toString(cd.getSurface()));
-				xtw.writeAttribute("ps", cd.getPaths().toString());
+				StringBuilder sb = new StringBuilder();
+				for (int i: cd.getPaths()) {
+					sb.append(Integer.toString(i));
+				}
+				xtw.writeAttribute("ps", sb.toString());
 				xtw.writeAttribute("ds", Integer.toString(cd.getDirt()));
 				if (cd.isChargingStation()) {
 					xtw.writeAttribute("cs", "1");	
 				} else {
 					xtw.writeAttribute("cs", "0");
 				}
-				
+				xtw.writeEndElement();
 			}
+			xtw.writeEndElement();
+			xtw.writeEndElement();
+			xtw.writeEndDocument();
+			xtw.flush();
+			xtw.close();
+//		    System.out.println();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -171,7 +182,7 @@ public class FloorPlan {
 	
 	
 	//write arraylist to xml to file
-	public void write(ArrayList<ArrayList<CellData>> grid) {
+	public void write() {
 		try {
 			map2xml();
 		} catch (FileNotFoundException | XMLStreamException e) {
@@ -208,6 +219,7 @@ public class FloorPlan {
 					System.out.println(xy2);
 				}
 			}
+			f.write();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
