@@ -17,8 +17,20 @@ public class ExploringState implements RobotStates
 		{
 			//allowed indexes of paths to be chosen randomly to go to
 			ArrayList<Integer> pathsIndexes = new ArrayList<Integer>();
-			//0: unknown 1: open, 2: obstical, 4: stairs
-			int[] paths = robot.sensors.getPaths(robot.currentX, robot.currentY);
+			
+			int[] paths = null;
+			if(!robot.devModeOn)
+			{
+				//0: unknown 1: open, 2: obstical, 4: stairs
+				paths = robot.sensors.getPaths(robot.currentX, robot.currentY);
+			}
+			else //else is for testing when dev mode is enabled
+			{
+				if(robot.devpaths.size() > 0)
+					paths = robot.devpaths.pop();
+				if(robot.devpaths.size() == 0)
+					robot.currentState = State.STOP.getValue();
+			}
 			//0: x pos, 1: x neg, 2: y pos, 3: y neg
 			int cameFrom = -1;
 			if(robot.route.size() != 0){

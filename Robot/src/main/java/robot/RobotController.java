@@ -1,11 +1,15 @@
 package robot;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 import sensors.SensorsController;
 
 public class RobotController
 {
+	public boolean devModeOn = false;//used for testing purposes
+	public LinkedList<int[]> devpaths;//hard coded paths for testing
+	
 	SensorsController sensors;
 	DirtController dirtController;
 	int currentState = State.READY_TO_CLEAN.getValue();
@@ -70,7 +74,7 @@ public class RobotController
 			}
 			else if(State.CHARGING.getValue() == currentState)
 			{
-				throw new Exception("Charging state is not implemented yet");
+				new ChargingState().execute(this);
 			}
 			else if(State.GOING_HOME.getValue() == currentState)
 			{
@@ -88,5 +92,15 @@ public class RobotController
 	public void setState(int state)
 	{
 		currentState = state;
+	}
+	
+	public int getCurrentX(){
+		return currentX;
+	}
+	public int getCurrentY(){
+		return currentY;
+	}
+	public int getCurrentPower(){
+		return currentPower;
 	}
 }

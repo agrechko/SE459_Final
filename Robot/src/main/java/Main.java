@@ -12,7 +12,7 @@ public class Main
 	
 	public static void main(String[] args) throws Exception 
 	{
-		String floorPlanLocation = "./resources/floorPlan";
+		String floorPlanLocation = "../Simulation/sample_floorplan.xml/resources/floorPlan";
 		if(args.length == 1)
 			floorPlanLocation = args[0];
 		SensorsController sensors = new SensorsController(floorPlanLocation);
