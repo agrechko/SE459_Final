@@ -1,3 +1,5 @@
+import java.io.File;
+
 import robot.DirtController;
 import robot.RobotController;
 import sensors.SensorsController;
@@ -12,9 +14,13 @@ public class Main
 	
 	public static void main(String[] args) throws Exception 
 	{
-		String floorPlanLocation = "../Simulation/sample_floorplan.xml/resources/floorPlan";
+		String floorPlanLocation = "../Simulation/sample_floorplan.xml";
 		if(args.length == 1)
 			floorPlanLocation = args[0];
+		
+		File f = new File(floorPlanLocation);
+		if(f.exists() && !f.isDirectory()) { System.out.println("file found"); }
+		
 		SensorsController sensors = new SensorsController(floorPlanLocation);
 		DirtController dirtController = new DirtController(); 
 		
