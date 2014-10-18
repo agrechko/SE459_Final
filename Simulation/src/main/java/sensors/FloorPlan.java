@@ -42,9 +42,15 @@ public class FloorPlan {
 	
 	//Sample floorplan, floorPlanLocation is the physical drive location
 	public FloorPlan(String floorPlanLocation) throws IOException {
-	    log = new LogFactory().generateLog();
-	    xmlfilename = floorPlanLocation;
-	    createInputFileStream();
+	    try {
+		    log = new LogFactory().generateLog();
+		    xmlfilename = floorPlanLocation;
+		    createInputFileStream();
+			read();
+		} catch (XMLStreamException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void createInputFileStream() throws IOException {
@@ -200,7 +206,7 @@ public class FloorPlan {
 	public static void main(String[] args) throws XMLStreamException {
 		try {
 			FloorPlan f = new FloorPlan("sample_floorplan.xml");
-			HashMap<Coord, CellData> g = f.read();
+//			HashMap<Coord, CellData> g = f.read();
 			Coord a = new Coord(0,0);
 			Coord b = new Coord(0,0);
 			if (a.equals(b)) {
@@ -210,9 +216,9 @@ public class FloorPlan {
 			}
 //			CellData xy = g.get(new Coord(1,2));
 //			System.out.println(xy.getCellX());
-			for (Coord c: g.keySet()) {
-				CellData xy1 = g.get(c);
-				CellData xy2 = g.get(a);
+			for (Coord c: f.grid.keySet()) {
+				CellData xy1 = f.grid.get(c);
+				CellData xy2 = f.grid.get(a);
 				if (xy1.getCellX() == 0 && xy1.getCellY() == 0) {
 					System.out.println(a.equals(c));
 					System.out.println(c.getx() + ":" + c.gety());
