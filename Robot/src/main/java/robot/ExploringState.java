@@ -96,6 +96,11 @@ public class ExploringState implements RobotStates
 			System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
 			robot.currentPower -= 1;
 			
+			if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
+			{
+				robot.route.clear();//cleans back route stack if we encountered a charging station because we know a shorter way back home
+			}
+			
 			if(!robot.sensors.isClean(robot.currentX, robot.currentY))
 			{
 				System.out.println("Entering cleaning mode");
