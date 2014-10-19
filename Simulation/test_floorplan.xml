@@ -1,0 +1,8 @@
+<home>
+<floor level ='1'>
+<!-- Guest Bedroom A -->
+<cell xs='0' ys='0' ss='2' ps='1212 ' ds='1' cs='1' />
+<cell xs='1' ys='0' ss='2' ps='1112 ' ds='1' cs='0' />
+</floor>
+</home>
+
