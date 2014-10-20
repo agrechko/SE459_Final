@@ -45,4 +45,29 @@ public class CellData
 	public void setChargingStation(boolean chargingStation) {
 		this.chargingStation = chargingStation;
 	}
+	
+	  public String toString() {
+		    // TODO
+		
+		  int x = getCellX();
+		  
+				  int y = getCellY();
+			  String s = "x:"+x+"\n"+"Y:"+y;
+			    return s;
+		  }
+	  public boolean equals(Object thatObject) {
+		    // TODO
+			  
+			   if (!(this.getClass().equals(thatObject.getClass())))
+			 // or if ( !(thatObject instanceof VideoObj) )
+				  return false;
+			  CellData that = (CellData) thatObject;
+			  return ( this.cellX == that.cellX
+					  && this.cellY==that.cellY    
+					  && this.dirt== that.dirt 
+					  && this.paths==that.paths
+					  && this.surface==that.surface	  
+							  );
+		  }
+
 }

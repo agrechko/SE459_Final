@@ -10,9 +10,14 @@ import objectsDTO.Coord;
 public class SensorsController 
 {
 	FloorPlan floorplan;
-	public SensorsController(String floorPlanPath) throws IOException  
+	public SensorsController(String floorPlanPath) 
 	{
-		floorplan = new FloorPlan(floorPlanPath);
+		try {
+			floorplan = new FloorPlan(floorPlanPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//this method checks if the given location x and y on the sweepers has been visited
