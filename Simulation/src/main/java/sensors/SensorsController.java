@@ -131,13 +131,12 @@ public class SensorsController
 
 	public CellData getChargingStationLocation() {
 		CellData cd = new CellData ();
-		for(Coord xy: floorplan.grid.keySet()){
+		for(Coord xy: floorplan.grid.keySet()) {
 			cd = floorplan.grid.get(xy);
-			if (cd.isChargingStation() == true) 
-			 {
+			if (cd.isChargingStation() == true) {
 				return cd;
-			  } 
-			}
-			return cd;
+			} 
+		}
+		return null;
 	}
 }
