@@ -19,6 +19,8 @@ public class ReadyToCleanState implements RobotStates
 		}
 		else
 		{
+			robot.currentX = robot.sensors.getChargingStationLocation().getCellX();
+			robot.currentY = robot.sensors.getChargingStationLocation().getCellY();
 			robot.setState(State.EXPLORING.getValue());
 		}
 	}

@@ -17,6 +17,7 @@ public class ExploringState implements RobotStates
 		{
 			//allowed indexes of paths to be chosen randomly to go to
 			ArrayList<Integer> pathsIndexes = new ArrayList<Integer>();
+			int floorType = -1;
 			
 			int[] paths = null;
 			if(!robot.devModeOn)
@@ -70,61 +71,65 @@ public class ExploringState implements RobotStates
 			{
 				robot.wentBackFrom = -1;//reset the coming back path
 				Random gen = new Random();
-				int selectedPath = pathsIndexes.get(gen.nextInt(pathsIndexes.size()));
-				move(robot, selectedPath);
+				Boolean selected = false;
+				int selectedPath = -1;
+				while(!selected && pathsIndexes.size() > 0)
+				{
+					int selectedIndex = gen.nextInt(pathsIndexes.size());
+					selectedPath = pathsIndexes.get(selectedIndex);
+					floorType = robot.sensors.getSurface(robot.currentX, robot.currentY);
+					if(robot.currentPower - robot.getPowerConsumption(floorType) >= robot.maxPower/2)
+					{
+						selected = true;
+						continue;
+					}
+					pathsIndexes.remove(selectedIndex);//remove index because moving to this path will draw to much power
+				}
+				if(pathsIndexes.size() != 0)
+				{
+					move(robot, selectedPath);
+				}
+				else
+				{
+					robot.currentState = State.GOING_HOME.getValue();
+				}
+					//unvisited paths indexes from the available path indexes in pathsIndexes array
+	//				ArrayList<Integer> unvisitedPaths = new ArrayList<Integer>();
+	//				for(Integer i : pathsIndexes)
+	//				{
+	//					if(!getVisitStatus(robot, i)){
+	//						unvisitedPaths.add(i);
+	//					}
+	//				}
+	//				
+	//				int numUnvisitedPaths = unvisitedPaths.size();
+	//				if(numUnvisitedPaths != 0)//pick a random unvisited path to go to
+	//				{
+	//					
+	//				}
+	//				else
+	//				{
+	//					goBackOneStep(robot);
+	//				}
+			}
+			
+			if(robot.currentState != State.GOING_HOME.getValue())
+			{
+				System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
+				robot.currentPower -= robot.getPowerConsumption(floorType);
 				
-				//unvisited paths indexes from the available path indexes in pathsIndexes array
-//				ArrayList<Integer> unvisitedPaths = new ArrayList<Integer>();
-//				for(Integer i : pathsIndexes)
-//				{
-//					if(!getVisitStatus(robot, i)){
-//						unvisitedPaths.add(i);
-//					}
-//				}
-//				
-//				int numUnvisitedPaths = unvisitedPaths.size();
-//				if(numUnvisitedPaths != 0)//pick a random unvisited path to go to
-//				{
-//					
-//				}
-//				else
-//				{
-//					goBackOneStep(robot);
-//				}
-			}
-			
-			System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
-			int floorType = robot.sensors.getSurface(robot.currentX, robot.currentY);
-			robot.currentPower -= getPowerConsumption(floorType);
-			
-			if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
-			{
-				robot.route.clear();//cleans back route stack if we encountered a charging station because we know a shorter way back home
-			}
-			
-			if(!robot.sensors.isClean(robot.currentX, robot.currentY))
-			{
-				System.out.println("Entering cleaning mode");
-				robot.currentState = State.CLEANING.getValue();
+				if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
+				{
+					robot.route.clear();//cleans back route stack if we encountered a charging station because we know a shorter way back home
+				}
+				
+				if(!robot.sensors.isClean(robot.currentX, robot.currentY))
+				{
+					System.out.println("Entering cleaning mode");
+					robot.currentState = State.CLEANING.getValue();
+				}
 			}
 		}
-	}
-	
-	private int getPowerConsumption(int floorType)
-	{
-		int powerConsumption = 0;
-		switch(floorType){
-		case 1: 
-			powerConsumption = 1;
-			break;
-		case 2:
-			powerConsumption = 2;
-			break;
-		case 4:
-			powerConsumption = 3;
-			break;
-		}
-		return powerConsumption;
 	}
 	
 	private void move(RobotController robot, int selectedPath)

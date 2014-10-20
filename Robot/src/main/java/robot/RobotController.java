@@ -105,4 +105,21 @@ public class RobotController
 	public int getCurrentPower(){
 		return currentPower;
 	}
+	
+	public int getPowerConsumption(int floorType)
+	{
+		int powerConsumption = 0;
+		switch(floorType){
+		case 1: 
+			powerConsumption = 1;
+			break;
+		case 2:
+			powerConsumption = 2;
+			break;
+		case 4:
+			powerConsumption = 3;
+			break;
+		}
+		return powerConsumption;
+	}
 }
