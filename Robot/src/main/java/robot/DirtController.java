@@ -12,7 +12,7 @@ public class DirtController
 	
 	public void update(int surfaceType)
 	{
-		currentDirtCapacity--; 
+		currentDirtCapacity++; 
 		currentPower = currentPower - surfaceType;
 	}
 }

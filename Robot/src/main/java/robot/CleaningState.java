@@ -11,7 +11,11 @@ public class CleaningState implements RobotStates
 	
 	public void execute(RobotController robot) 
 	{
-		if(robot.currentDirtCapacity <= (robot.maxDirtCapacity/2))
+		if(robot.currentDirtCapacity == robot.maxDirtCapacity)
+		{
+			robot.currentState = State.GOING_HOME.getValue();
+		}
+		else if(robot.currentPower <= (robot.maxPower/2))
 		{
 			robot.currentState = State.GOING_HOME.getValue();
 		}
@@ -26,7 +30,6 @@ public class CleaningState implements RobotStates
 				if(robot.sensors.isClean(robot.currentX, robot.currentY) == true)
 				{
 					robot.currentState = State.STOP.getValue();
-					robot.sensors.isAllClean();
 				}
 				else
 				{
