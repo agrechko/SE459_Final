@@ -94,7 +94,8 @@ public class ExploringState implements RobotStates
 			}
 			
 			System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
-			robot.currentPower -= 1;
+			int floorType = robot.sensors.getSurface(robot.currentX, robot.currentY);
+			robot.currentPower -= getPowerConsumption(floorType);
 			
 			if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
 			{
@@ -107,6 +108,23 @@ public class ExploringState implements RobotStates
 				robot.currentState = State.CLEANING.getValue();
 			}
 		}
+	}
+	
+	private int getPowerConsumption(int floorType)
+	{
+		int powerConsumption = 0;
+		switch(floorType){
+		case 1: 
+			powerConsumption = 1;
+			break;
+		case 2:
+			powerConsumption = 2;
+			break;
+		case 4:
+			powerConsumption = 3;
+			break;
+		}
+		return powerConsumption;
 	}
 	
 	private void move(RobotController robot, int selectedPath)
