@@ -1,7 +1,7 @@
 /**
  * 
  */
-package robot;
+package statesTests;
 
 import static org.junit.Assert.*;
 
@@ -49,7 +49,8 @@ public class CleaningStateTest {
 	 * Test method for {@link robot.CleaningState#execute(robot.RobotController)}.
 	 */
 	@Test
-	public void testExecute() {
+	public final void testExecute() {
 		fail("Not yet implemented"); // TODO
 	}
+
 }
