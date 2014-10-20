@@ -10,7 +10,7 @@ public class DirtController
 	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
 	int maxDirtCapacity;
 	
-	public void clean(int surfaceType)
+	public void update(int surfaceType)
 	{
 		currentDirtCapacity--; 
 		currentPower = currentPower - surfaceType;
