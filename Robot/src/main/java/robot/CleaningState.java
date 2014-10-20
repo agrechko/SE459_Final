@@ -26,11 +26,13 @@ public class CleaningState implements RobotStates
 				if(robot.sensors.isClean(robot.currentX, robot.currentY) == true)
 				{
 					robot.currentState = State.STOP.getValue();
+					robot.sensors.isAllClean();
 				}
 				else
 				{
 					surface = robot.sensors.getSurface(robot.currentX, robot.currentY);
-					robot.dirtController.clean(surface);
+					robot.sensors.clean(robot.currentX, robot.currentY);
+					robot.dirtController.update(surface);
 				}
 			}
 		}
