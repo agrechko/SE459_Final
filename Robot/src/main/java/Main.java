@@ -11,7 +11,7 @@ public class Main
 	final static int MAX_DIRT_CAPACITY = 50;
 	final static int START_X = 0;
 	final static int START_Y = 0;
-	
+		
 	public static void main(String[] args) throws Exception 
 	{
 		String floorPlanLocation = "../Simulation/sample_floorplan.xml";

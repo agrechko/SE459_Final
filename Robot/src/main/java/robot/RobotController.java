@@ -16,6 +16,7 @@ public class RobotController
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
 	int maxPower;
 	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
+	int maxDirtCapacity;
 	int currentX;
 	int currentY;
 	int wentBackFrom = -1;
@@ -49,6 +50,7 @@ public class RobotController
 		this.currentPower = maxPower;
 		this.maxPower = maxPower;
 		this.currentDirtCapacity = maxDirtCapacity;
+		this.maxDirtCapacity = maxDirtCapacity;
 		this.dirtController = dirtController;
 		this.currentX = startX;
 		this.currentY = startY;
