@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import utils.LogFactory;
+import java.util.logging.Level;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -30,13 +31,13 @@ public class FloorPlan {
    private FileInputStream inputfile;
    private final static String outputfile = "floorplan.xml";
    private 	String xmlfilename;
-   HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); //the full floor plan grid that is read in from the xml
+   public HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); //the full floor plan grid that is read in from the xml
 
 //	ArrayList<ArrayList<CellData>> grid; 
 //	ArrayList<ArrayList<CellData>> sweeperMemoryGrid;//the floor plan the sweeper encounters
 
 	public FloorPlan() throws IOException {
-	    log = new LogFactory().generateLog();
+	    log = new LogFactory().generateLog("Floorplan", Level.INFO);
 	    createInputFileStream();
 	}
 	
@@ -78,7 +79,7 @@ public class FloorPlan {
 			String atName = reader.getAttributeLocalName(i);
 			Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
 // 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
-			log.info( "ATTRIBUTE: " + atName + ", " + atValue);
+			log.log(Level.FINE, "ATTRIBUTE: " + atName + ", " + atValue);
 			switch(atName) {
 				case "xs": 
 					cd.setCellX(atValue);
