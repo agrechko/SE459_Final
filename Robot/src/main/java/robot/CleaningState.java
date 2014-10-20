@@ -30,6 +30,7 @@ public class CleaningState implements RobotStates
 				}
 				else
 				{
+					//Clean floor unit based on floor surface
 					surface = robot.sensors.getSurface(robot.currentX, robot.currentY);
 					robot.sensors.clean(robot.currentX, robot.currentY);
 					robot.dirtController.update(surface);
