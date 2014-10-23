@@ -9,7 +9,7 @@ import objectsDTO.Coord;
 
 public class SensorsController 
 {
-	FloorPlan floorplan;
+	public FloorPlan floorplan;
 	public SensorsController(String floorPlanPath) 
 	{
 		try {
@@ -139,6 +139,7 @@ public class SensorsController
 		for(Coord xy: floorplan.grid.keySet()) {
 			cd = floorplan.grid.get(xy);
 			if (cd.isChargingStation() == true) {
+				System.out.println(cd);
 				return cd;
 			} 
 		}

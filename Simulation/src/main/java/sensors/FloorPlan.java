@@ -79,7 +79,7 @@ public class FloorPlan {
 			String atName = reader.getAttributeLocalName(i);
 			Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
 // 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
-			log.log(Level.FINE, "ATTRIBUTE: " + atName + ", " + atValue);
+//			log.info("ATTRIBUTE: " + atName + ", " + atValue);
 			switch(atName) {
 				case "xs": 
 					cd.setCellX(atValue);
@@ -103,7 +103,7 @@ public class FloorPlan {
 					cd.setDirt(atValue);
 				break;							
 				case "cs": 
-					if (atValue.equals("0")) {
+					if (atValue == 0) {
 						cd.setChargingStation(false);
 					} else {
 						cd.setChargingStation(true);
