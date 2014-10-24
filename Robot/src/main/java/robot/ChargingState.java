@@ -1,12 +1,52 @@
 package robot;
 
+import java.util.Scanner;
+
 import robot.RobotController.State;
 
 public class ChargingState implements RobotStates
 {
 	public void execute(RobotController robot)
 	{
-		System.out.println("Charging is not implemented: changing state to STOP");
-		robot.currentState = State.STOP.getValue();
+		robot.currentPower = robot.maxPower;
+		if(robot.currentDirtCapacity == 0)
+		{
+			robot.emptyMe = true;
+			System.out.println("----- Empty Me -----");
+			
+			Scanner scan = new Scanner(System.in);
+			System.out.println("Available commands:");
+			System.out.println("Empty - to empty the dirt cargo bay and continue cleaning");
+			System.out.println("Stop - to empty the dirt cargo bay and do not continue cleaning");
+			//wait for user input to empty the dirt cargo bay or stop clean cycle
+			
+			while(true)
+			{
+				String userCommand = scan.nextLine().toLowerCase();
+				if(userCommand.equals("emptyme"))
+				{
+					robot.currentDirtCapacity = robot.maxDirtCapacity;
+					robot.currentState = State.READY_TO_CLEAN.getValue();
+					break;
+				}
+				else if(userCommand.equals("stop"))
+				{
+					robot.currentDirtCapacity = robot.maxDirtCapacity;
+					robot.currentState = State.STOP.getValue();
+					break;
+				}
+				else
+				{
+					System.out.println("Command not recognized. Please try again.");
+				}
+			}
+		}
+		
+		//all cells have been visited in this clean cycle so stop
+		if(robot.sensors.isAllClean())
+		{
+			System.out.println("The floor is so clean you can eat off it. Stopping...");
+			robot.currentState = State.STOP.getValue();
+		}
 	}
 }

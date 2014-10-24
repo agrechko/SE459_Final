@@ -20,6 +20,8 @@ public class RobotController
 	int currentX;
 	int currentY;
 	int wentBackFrom = -1;
+	int currentCleaningApparatus = 0;
+	Boolean emptyMe;
 	
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();
@@ -44,6 +46,23 @@ public class RobotController
         }
 	}
 	
+	enum CleaningApparatus{
+		APP_BARE_FLOOR(0),
+		APP_LOW_CARPET(1),
+		APP_HIGH_CARPET(2);
+		
+		private int value;
+		
+        private CleaningApparatus(int value) {
+                this.value = value;
+        }
+        
+        public int getValue()
+        {
+        	return value;
+        }
+	}
+	
 	public RobotController(SensorsController sensors, DirtController dirtController, int maxPower, int maxDirtCapacity, int startX, int startY)
 	{
 		this.sensors = sensors;
@@ -54,6 +73,7 @@ public class RobotController
 		this.dirtController = dirtController;
 		this.currentX = startX;
 		this.currentY = startY;
+		emptyMe = false;
 	}
 	
 	//controlls execution state
