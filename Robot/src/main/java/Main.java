@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Scanner;
 
 import robot.DirtController;
 import robot.RobotController;
@@ -24,7 +25,28 @@ public class Main
 		SensorsController sensors = new SensorsController(floorPlanLocation);
 		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
-		robot.execute();
+		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY,
+				sensors.getChargingStationLocation().getCellX(), sensors.getChargingStationLocation().getCellY());
+		robot.start();
+		
+		Scanner scan = new Scanner(System.in);
+		while(true)
+		{
+			System.out.println("Available command:");
+			System.out.println("Print - prints the current state of the floor plan (NOT IMPLEMENTED)");
+			System.out.println("Stop - stops the current clean cycle");
+			String userCommand = scan.nextLine().toLowerCase().trim();
+			if(!robot.userInput(userCommand))
+			{
+				System.out.println("Command not recognized. Please try again.");
+			}
+			else
+			{
+				if(userCommand.equals("stop"))
+				{
+					break;
+				}
+			}
+		}
 	}
 }

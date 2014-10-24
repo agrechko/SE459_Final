@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import sensors.SensorsController;
 
-public class RobotController
+public class RobotController extends Thread
 {
 	public boolean devModeOn = false;//used for testing purposes
 	public LinkedList<int[]> devpaths;//hard coded paths for testing
@@ -13,6 +13,7 @@ public class RobotController
 	SensorsController sensors;
 	DirtController dirtController;
 	int currentState = State.READY_TO_CLEAN.getValue();
+	int prevState;
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
 	int maxPower;
 	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
@@ -22,6 +23,8 @@ public class RobotController
 	int wentBackFrom = -1;
 	int currentCleaningApparatus = 0;
 	Boolean emptyMe;
+	Boolean userInputWaiting;
+	int userInputState;
 	
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();
@@ -32,7 +35,8 @@ public class RobotController
 		CLEANING(2),
 		CHARGING(3),
 		GOING_HOME(4),
-		EXPLORING(5);
+		EXPLORING(5),
+		PRINT(6);
 		
 		private int value;
 		
@@ -74,13 +78,22 @@ public class RobotController
 		this.currentX = startX;
 		this.currentY = startY;
 		emptyMe = false;
+		userInputWaiting = false;
 	}
 	
 	//controlls execution state
-	public void execute() throws Exception
+	public void run()
 	{
 		while(true)
 		{
+			//user has inputed a command on the other thread
+			if(userInputWaiting)
+			{
+				userInputWaiting = false;
+				prevState = currentState;
+				currentState = userInputState;
+			}
+			
 			System.out.println("power: " + currentPower);
 			if(State.READY_TO_CLEAN.getValue() == currentState)
 			{
@@ -107,13 +120,17 @@ public class RobotController
 				new StopState().execute(this);
 				break;
 			}
+			else if(State.PRINT.getValue() == currentState)
+			{
+				//print the floor plan in print state and set the current state to what it was before to continue execution
+				currentState = prevState;
+			}
+			else
+			{
+				System.out.println("Invalid state reached. Exiting...");
+				break;
+			}
 		}	
-	}
-	
-	//change robot state
-	public void setState(int state)
-	{
-		currentState = state;
 	}
 	
 	public int getCurrentX(){
@@ -141,5 +158,26 @@ public class RobotController
 			break;
 		}
 		return powerConsumption;
+	}
+	
+	//return true if the user command has been recognized else false
+	public boolean userInput(String userCommand)
+	{
+		if(userCommand.equals("stop"))
+		{
+			userInputState = State.STOP.getValue();
+			userInputWaiting = true;
+		}
+		else if(userCommand.equals("print"))
+		{
+			userInputState = State.PRINT.getValue();
+			System.out.println("print is not implemented yet");
+		}
+		else
+		{
+			return false;
+		}
+		
+		return true;
 	}
 }

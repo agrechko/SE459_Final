@@ -8,10 +8,12 @@ public class ChargingState implements RobotStates
 {
 	public void execute(RobotController robot)
 	{
+		Boolean userAssistance = false;//user assistance is needed to continue
 		robot.currentPower = robot.maxPower;
 		if(robot.currentDirtCapacity == 0)
 		{
 			robot.emptyMe = true;
+			userAssistance = true;
 			System.out.println("----- Empty Me -----");
 			
 			Scanner scan = new Scanner(System.in);
@@ -22,15 +24,17 @@ public class ChargingState implements RobotStates
 			
 			while(true)
 			{
-				String userCommand = scan.nextLine().toLowerCase();
+				String userCommand = scan.nextLine().toLowerCase().trim();
 				if(userCommand.equals("emptyme"))
 				{
+					robot.emptyMe = false;
 					robot.currentDirtCapacity = robot.maxDirtCapacity;
 					robot.currentState = State.READY_TO_CLEAN.getValue();
 					break;
 				}
 				else if(userCommand.equals("stop"))
 				{
+					robot.emptyMe = false;
 					robot.currentDirtCapacity = robot.maxDirtCapacity;
 					robot.currentState = State.STOP.getValue();
 					break;
@@ -47,6 +51,13 @@ public class ChargingState implements RobotStates
 		{
 			System.out.println("The floor is so clean you can eat off it. Stopping...");
 			robot.currentState = State.STOP.getValue();
+		}
+		else
+		{
+			if(!userAssistance)
+			{
+				robot.currentState = State.READY_TO_CLEAN.getValue();
+			}
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class ExploringStateTest
 		testPaths.add(new int[]{1,2,2,2});//just came back from allowed path (0,0)
 		
 		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
-		robot.execute();
+		robot.run();
 		
 		assertTrue(robot.getCurrentX() == 0);
 		assertTrue(robot.getCurrentY() == 0);
@@ -66,7 +66,7 @@ public class ExploringStateTest
 		testPaths.add(new int[]{2,2,1,2});//just came back from allowed path (0,0)
 		
 		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
-		robot.execute();
+		robot.run();
 		
 		assertTrue(robot.getCurrentX() == 0);
 		assertTrue(robot.getCurrentY() == 0);
@@ -102,7 +102,7 @@ public class ExploringStateTest
 		testPaths.add(new int[]{2,2,1,2});//just came back from allowed path (0,0)
 		
 		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
-		robot.execute();
+		robot.run();
 		
 		assertTrue(robot.getCurrentX() == 0);
 		assertTrue(robot.getCurrentY() == 0);
@@ -136,7 +136,7 @@ public class ExploringStateTest
 		testPaths.add(new int[]{2,2,1,2});
 		
 		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
-		robot.execute();
+		robot.run();
 		
 		assertTrue(robot.getCurrentX() == 0);
 		assertTrue(robot.getCurrentY() == 0);
@@ -172,7 +172,7 @@ public class ExploringStateTest
 
 		
 		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
-		robot.execute();
+		robot.run();
 		
 		assertTrue(robot.getCurrentX() == 0);
 		assertTrue(robot.getCurrentY() == 0);

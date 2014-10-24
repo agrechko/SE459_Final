@@ -15,13 +15,11 @@ public class ReadyToCleanState implements RobotStates
 		//if dirt controller is null we cannot clean dirt
 		if(robot.currentDirtCapacity <= 0 || robot.currentPower <= 1 || robot.sensors == null || robot.dirtController == null)
 		{
-			robot.setState(State.STOP.getValue());
+			robot.currentState = State.STOP.getValue();
 		}
 		else
 		{
-			robot.currentX = robot.sensors.getChargingStationLocation().getCellX();
-			robot.currentY = robot.sensors.getChargingStationLocation().getCellY();
-			robot.setState(State.EXPLORING.getValue());
+			robot.currentState = State.EXPLORING.getValue();
 		}
 	}
 }
