@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import robot.RobotController;
+import robot.RobotController.State;
 import sensors.SensorsController;
 
 /**
@@ -44,11 +45,13 @@ public class CleaningStateTest {
 		testPaths.add(new int[]{1,2,2,2});//(2,1)
 		
 		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
+		robot.setCurrentDirtCapacity(0);
 		robot.run();
 		
 		assertTrue(robot.getCurrentX() == 0);
 		assertTrue(robot.getCurrentY() == 0);
 		assertTrue(robot.getCurrentDirtCapacity() == 0);
+		assertTrue(robot.currentState == State.GOING_HOME.getValue());
 	}
 
 	/**

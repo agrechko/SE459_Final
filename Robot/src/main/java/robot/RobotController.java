@@ -11,7 +11,7 @@ public class RobotController extends Thread
 	public LinkedList<int[]> devpaths;//hard coded paths for testing
 	
 	SensorsController sensors;
-	int currentState = State.READY_TO_CLEAN.getValue();
+	public int currentState = State.READY_TO_CLEAN.getValue();
 	int prevState;
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
 	int maxPower;
@@ -27,7 +27,7 @@ public class RobotController extends Thread
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();
 	
-	enum State{
+	public enum State{
 		STOP(0),
 		READY_TO_CLEAN(1), 
 		CLEANING(2),
