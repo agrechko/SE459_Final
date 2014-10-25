@@ -5,9 +5,18 @@ public class CellData
 	int surface;
 	int dirt;
 	int[] paths;
-	boolean chargingStation;
+	Boolean  chargingStation;
 	int cellX;
 	int cellY;
+	
+	public CellData(int x, int y) {
+		cellX = x;
+		cellY = y;
+		surface = -1;
+		dirt = -1;
+		paths = null;
+		chargingStation = null;
+	}
 
 	public int getCellX() {
 		return cellX;
@@ -45,29 +54,33 @@ public class CellData
 	public void setChargingStation(boolean chargingStation) {
 		this.chargingStation = chargingStation;
 	}
-	
-	  public String toString() {
-		    // TODO
-		
-		  int x = getCellX();
-		  
-				  int y = getCellY();
-			  String s = "x:"+x+"\n"+"Y:"+y;
-			    return s;
-		  }
-	  public boolean equals(Object thatObject) {
-		    // TODO
-			  
-			   if (!(this.getClass().equals(thatObject.getClass())))
-			 // or if ( !(thatObject instanceof VideoObj) )
-				  return false;
-			  CellData that = (CellData) thatObject;
-			  return ( this.cellX == that.cellX
-					  && this.cellY==that.cellY    
-					  && this.dirt== that.dirt 
-					  && this.paths==that.paths
-					  && this.surface==that.surface	  
-							  );
-		  }
+
+	public String toString() {
+		int x = getCellX();
+		int y = getCellY();
+//		String s = "x:" + x + " " + " Y: " + y;
+		StringBuilder sb = new StringBuilder();
+		sb.append("x: " + x);
+		sb.append("y: " + y);
+		sb.append("ss: " + surface);
+		sb.append("ds: " + dirt);
+		return sb.toString();
+	}
+
+	public boolean equals(Object thatObject) {
+		// TODO
+
+		if (!(this.getClass().equals(thatObject.getClass()))) {
+			// or if ( !(thatObject instanceof VideoObj) )
+			return false;
+		}
+		CellData that = (CellData) thatObject;
+		return ( this.cellX == that.cellX
+				&& this.cellY==that.cellY    
+				&& this.dirt== that.dirt 
+				&& this.paths==that.paths
+				&& this.surface==that.surface	  
+				);
+	}
 
 }
