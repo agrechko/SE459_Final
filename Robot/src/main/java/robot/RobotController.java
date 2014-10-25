@@ -11,13 +11,11 @@ public class RobotController extends Thread
 	public LinkedList<int[]> devpaths;//hard coded paths for testing
 	
 	SensorsController sensors;
-	DirtController dirtController;
 	int currentState = State.READY_TO_CLEAN.getValue();
 	int prevState;
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
 	int maxPower;
 	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
-	int maxDirtCapacity;
 	int currentX;
 	int currentY;
 	int wentBackFrom = -1;
@@ -67,14 +65,12 @@ public class RobotController extends Thread
         }
 	}
 	
-	public RobotController(SensorsController sensors, DirtController dirtController, int maxPower, int maxDirtCapacity, int startX, int startY)
+	public RobotController(SensorsController sensors, int maxPower, int maxDirtCapacity, int startX, int startY)
 	{
 		this.sensors = sensors;
 		this.currentPower = maxPower;
 		this.maxPower = maxPower;
 		this.currentDirtCapacity = maxDirtCapacity;
-		this.maxDirtCapacity = maxDirtCapacity;
-		this.dirtController = dirtController;
 		this.currentX = startX;
 		this.currentY = startY;
 		emptyMe = false;

@@ -1,7 +1,6 @@
 import java.io.File;
 import java.util.Scanner;
 
-import robot.DirtController;
 import robot.RobotController;
 import sensors.SensorsController;
 
@@ -23,9 +22,8 @@ public class Main
 		if(f.exists() && !f.isDirectory()) { System.out.println("file found"); }
 		
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY,
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY,
 				sensors.getChargingStationLocation().getCellX(), sensors.getChargingStationLocation().getCellY());
 		robot.start();
 		

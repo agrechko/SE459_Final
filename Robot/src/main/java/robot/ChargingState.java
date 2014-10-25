@@ -28,14 +28,14 @@ public class ChargingState implements RobotStates
 				if(userCommand.equals("emptyme"))
 				{
 					robot.emptyMe = false;
-					robot.currentDirtCapacity = robot.maxDirtCapacity;
+					robot.currentDirtCapacity = robot.currentDirtCapacity;
 					robot.currentState = State.READY_TO_CLEAN.getValue();
 					break;
 				}
 				else if(userCommand.equals("stop"))
 				{
 					robot.emptyMe = false;
-					robot.currentDirtCapacity = robot.maxDirtCapacity;
+					robot.currentDirtCapacity = robot.currentDirtCapacity;
 					robot.currentState = State.STOP.getValue();
 					break;
 				}

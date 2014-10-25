@@ -13,7 +13,7 @@ public class ReadyToCleanState implements RobotStates
 		//if current power is less than 2 it means that we do not have enough power to go half way and back
 		//if sensors are null we cannot see the environment
 		//if dirt controller is null we cannot clean dirt
-		if(robot.currentDirtCapacity <= 0 || robot.currentPower <= 1 || robot.sensors == null || robot.dirtController == null)
+		if(robot.currentDirtCapacity <= 0 || robot.currentPower <= 1 || robot.sensors == null)
 		{
 			robot.currentState = State.STOP.getValue();
 		}

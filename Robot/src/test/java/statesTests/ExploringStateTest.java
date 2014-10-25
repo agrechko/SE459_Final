@@ -7,7 +7,6 @@ import java.util.LinkedList;
 
 import org.junit.Test;
 
-import robot.DirtController;
 import robot.RobotController;
 import sensors.SensorsController;
 
@@ -24,9 +23,8 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "./resources/floorPlan";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		robot.devModeOn = true;
 		
 		LinkedList<int[]> testPaths = new LinkedList<int[]>();
@@ -54,9 +52,8 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "./resources/floorPlan";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		robot.devModeOn = true;
 		
 		LinkedList<int[]> testPaths = new LinkedList<int[]>();
@@ -84,9 +81,8 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "./resources/floorPlan";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		robot.devModeOn = true;
 		
 		LinkedList<int[]> testPaths = new LinkedList<int[]>();
@@ -120,9 +116,8 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "./resources/floorPlan";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		robot.devModeOn = true;
 		
 		LinkedList<int[]> testPaths = new LinkedList<int[]>();
@@ -154,9 +149,8 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "./resources/floorPlan";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-		DirtController dirtController = new DirtController(); 
 		
-		RobotController robot = new RobotController(sensors, dirtController, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		robot.devModeOn = true;
 		
 		LinkedList<int[]> testPaths = new LinkedList<int[]>();
