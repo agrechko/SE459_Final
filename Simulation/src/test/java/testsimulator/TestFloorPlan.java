@@ -30,7 +30,7 @@ public class TestFloorPlan {
 		}
 		CellData cd1 = f.grid.get(new Coord(1, 0));
 		assertTrue(cd1 != null);
-		assertTrue(cd1.isChargingStation());
+		assertFalse(cd1.isChargingStation());
 		assertEquals(cd1.getCellX(), 1);
 		assertEquals(cd1.getCellY(), 0);
 		assertEquals(cd1.getDirt(), 1);
