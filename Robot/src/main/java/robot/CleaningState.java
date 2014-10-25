@@ -25,11 +25,13 @@ public class CleaningState implements RobotStates
 			}
 			else
 			{
+				System.out.println("before "+robot.sensors.getCell(robot.currentX, robot.currentY).getDirt());
 				surface = robot.sensors.getSurface(robot.currentX, robot.currentY);
 				robot.sensors.clean(robot.currentX, robot.currentY);
 				robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity() - 1); 
 				robot.currentPower = robot.currentPower - surface;
-
+				System.out.println("After "+robot.sensors.getCell(robot.currentX, robot.currentY).getDirt());
+				System.out.println("current dirt capacity "+ robot.getCurrentDirtCapacity());
 			}
 		}
 	}
