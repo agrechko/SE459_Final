@@ -48,8 +48,6 @@ public class CleaningStateTest {
 		robot.setCurrentDirtCapacity(0);
 		robot.run();
 		
-		assertTrue(robot.getCurrentX() == 0);
-		assertTrue(robot.getCurrentY() == 0);
 		assertTrue(robot.getCurrentDirtCapacity() == 0);
 		assertTrue(robot.currentState == State.GOING_HOME.getValue());
 	}
