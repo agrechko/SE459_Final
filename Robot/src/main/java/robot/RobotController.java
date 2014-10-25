@@ -15,7 +15,7 @@ public class RobotController extends Thread
 	int prevState;
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
 	int maxPower;
-	int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
+	private int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
 	int currentX;
 	int currentY;
 	int wentBackFrom = -1;
@@ -70,7 +70,7 @@ public class RobotController extends Thread
 		this.sensors = sensors;
 		this.currentPower = maxPower;
 		this.maxPower = maxPower;
-		this.currentDirtCapacity = maxDirtCapacity;
+		this.setCurrentDirtCapacity(maxDirtCapacity);
 		this.currentX = startX;
 		this.currentY = startY;
 		emptyMe = false;
@@ -175,5 +175,19 @@ public class RobotController extends Thread
 		}
 		
 		return true;
+	}
+
+	/**
+	 * @return the currentDirtCapacity
+	 */
+	public int getCurrentDirtCapacity() {
+		return currentDirtCapacity;
+	}
+
+	/**
+	 * @param currentDirtCapacity the currentDirtCapacity to set
+	 */
+	public void setCurrentDirtCapacity(int currentDirtCapacity) {
+		this.currentDirtCapacity = currentDirtCapacity;
 	}
 }

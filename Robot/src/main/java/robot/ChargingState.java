@@ -10,7 +10,7 @@ public class ChargingState implements RobotStates
 	{
 		Boolean userAssistance = false;//user assistance is needed to continue
 		robot.currentPower = robot.maxPower;
-		if(robot.currentDirtCapacity == 0)
+		if(robot.getCurrentDirtCapacity() == 0)
 		{
 			robot.emptyMe = true;
 			userAssistance = true;
@@ -28,14 +28,14 @@ public class ChargingState implements RobotStates
 				if(userCommand.equals("emptyme"))
 				{
 					robot.emptyMe = false;
-					robot.currentDirtCapacity = robot.currentDirtCapacity;
+					robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity());
 					robot.currentState = State.READY_TO_CLEAN.getValue();
 					break;
 				}
 				else if(userCommand.equals("stop"))
 				{
 					robot.emptyMe = false;
-					robot.currentDirtCapacity = robot.currentDirtCapacity;
+					robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity());
 					robot.currentState = State.STOP.getValue();
 					break;
 				}

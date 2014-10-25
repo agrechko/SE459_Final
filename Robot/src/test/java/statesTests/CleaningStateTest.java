@@ -5,11 +5,16 @@ package statesTests;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import robot.RobotController;
+import sensors.SensorsController;
 
 /**
  * @author Jimmy
@@ -17,11 +22,33 @@ import org.junit.Test;
  */
 public class CleaningStateTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@SuppressWarnings("unchecked")
+	@Test
+	//Checks if Cleaning Capacity is at max, sends robot to go home
+	public void maxDirtCapacity()
+	{
+		final int MAX_POWER = 50;
+		final int MAX_DIRT_CAPACITY = 0;
+		final int START_X = 0;
+		final int START_Y = 0;
+		
+		String floorPlanLocation = "./resources/floorPlan";
+		SensorsController sensors = new SensorsController(floorPlanLocation);
+		
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
+		robot.devModeOn = true;
+		
+		LinkedList<int[]> testPaths = new LinkedList<int[]>();
+		testPaths.add(new int[]{1,2,2,2});//(1,0)
+		testPaths.add(new int[]{2,2,1,2});//(1,1)
+		testPaths.add(new int[]{1,2,2,2});//(2,1)
+		
+		robot.devpaths = (LinkedList<int[]>) testPaths.clone();
+		robot.run();
+		
+		assertTrue(robot.getCurrentX() == 0);
+		assertTrue(robot.getCurrentY() == 0);
+		assertTrue(robot.getCurrentDirtCapacity() == 0);
 	}
 
 	/**

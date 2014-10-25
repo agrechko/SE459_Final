@@ -9,7 +9,7 @@ public class CleaningState implements RobotStates
 	
 	public void execute(RobotController robot) 
 	{
-		if(robot.currentDirtCapacity == 0)
+		if(robot.getCurrentDirtCapacity() == 0)
 		{
 			robot.currentState = State.GOING_HOME.getValue();
 		}
@@ -27,7 +27,7 @@ public class CleaningState implements RobotStates
 			{
 				surface = robot.sensors.getSurface(robot.currentX, robot.currentY);
 				robot.sensors.clean(robot.currentX, robot.currentY);
-				robot.currentDirtCapacity--; 
+				robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity() - 1); 
 				robot.currentPower = robot.currentPower - surface;
 
 			}
