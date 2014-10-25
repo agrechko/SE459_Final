@@ -139,7 +139,7 @@ public class SensorsController
 		for(Coord xy: floorplan.grid.keySet()) {
 			cd = floorplan.grid.get(xy);
 			if (cd.isChargingStation() == true) {
-				System.out.println(cd);
+//				System.out.println(cd);
 				return cd;
 			} 
 		}
