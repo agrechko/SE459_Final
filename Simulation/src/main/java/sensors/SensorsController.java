@@ -46,33 +46,25 @@ public class SensorsController
 			log.info("Creating new cell object and sensing dirt and surface type");
             cd = sample.getcell(x, y);
 		} 
-		return cd;
-		
+		return cd;		
 	}
+	
+	private void memcheck(int x, int y) {
+		Coord c = new Coord(x, y);
+		CellData cd = memory.grid.get(c);
+		if (cd == null) {
+			cd = sample.getcell(x , y);
+			memory.grid.put(c, cd);
+		}
+	}
+	
 	
 	//this takes in current cell and it returns the surrounding cells status 1: open, 2: obstical, 4: stairs  
 	public int[] getPaths(int x, int y)   
 	{
-//		int[] xy = new int[] {x,y};
-//		CellData cd = new CellData();
-//		cd = floorplan.grid.get(xy);
-//		return cd.getPaths();   //TODO Test this
+		memcheck(x, y);
 		return memory.grid.get(new Coord(x, y)).getPaths();
 		
-//		Random gen = new Random();
-//		int i = gen.nextInt(6);
-//		if(i == 0)
-//			return new int[]{1,2,2,2};
-//		else if(i == 1)
-//			return new int[]{2,1,2,2};
-//		else if(i == 2)
-//			return new int[]{2,2,1,2};
-//		else if (i == 3)
-//			return new int[]{2,2,2,1};
-//		else if(i == 4)
-//			return new int[]{1,2,2,1};
-//		else 
-//			return new int[]{1,2,1,1};
 	}
 	
 	//this sets the surrounding coordinates of the current location  //TODO
@@ -101,9 +93,9 @@ public class SensorsController
 	//this method return if the current location is clean or not
 	public boolean isClean(int x, int y) //TODO Test this
 	{
-//		int[] xy = new int[] {x,y};
-//		CellData cd = new CellData();
-		CellData cd = memory.grid.get(new Coord(x, y));
+		memcheck(x, y);
+		Coord c = new Coord(x, y);
+		CellData cd = memory.grid.get(c);
 		int CurrentDirt = cd.getDirt();
 		if (CurrentDirt == 0 ){
 		return true;
