@@ -2,20 +2,18 @@ package objectsDTO;
 
 public class CellData 
 {
-	int surface;
-	int dirt;
-	int[] paths;
-	Boolean  chargingStation;
-	int cellX;
-	int cellY;
+	int surface = -1;
+	int dirt= -1;
+	int[] paths = null;
+	Boolean  chargingStation = null;
+	int cellX = -1;
+	int cellY = -1;
 	
+	public CellData() { }
+
 	public CellData(int x, int y) {
 		cellX = x;
 		cellY = y;
-		surface = -1;
-		dirt = -1;
-		paths = null;
-		chargingStation = null;
 	}
 
 	public int getCellX() {
