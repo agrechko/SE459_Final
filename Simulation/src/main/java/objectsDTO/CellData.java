@@ -58,10 +58,11 @@ public class CellData
 		int y = getCellY();
 //		String s = "x:" + x + " " + " Y: " + y;
 		StringBuilder sb = new StringBuilder();
-		sb.append("x: " + x);
-		sb.append("y: " + y);
-		sb.append("ss: " + surface);
+		sb.append("x: " + x + " ");
+		sb.append("y: " + y + " ");
+		sb.append("ss: " + surface + " ");
 		sb.append("ds: " + dirt);
+		
 		return sb.toString();
 	}
 

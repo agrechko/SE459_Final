@@ -115,7 +115,8 @@ public class ExploringState implements RobotStates
 			
 			if(robot.currentState != State.GOING_HOME.getValue())
 			{
-				System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
+//				System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
+				System.out.println("Currently: " + robot.sensors.getCell(robot.currentX, robot.currentY));
 				robot.currentPower -= robot.getPowerConsumption(floorType);
 				
 				if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
