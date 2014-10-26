@@ -16,6 +16,7 @@ public class RobotController extends Thread
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
 	int maxPower;
 	private int currentDirtCapacity;//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
+	int maxDirtCapacity;
 	int currentX;
 	int currentY;
 	int wentBackFrom = -1;
@@ -23,6 +24,7 @@ public class RobotController extends Thread
 	Boolean emptyMe;
 	Boolean userInputWaiting;
 	int userInputState;
+	int userInputCommand;//0 = empty 
 	
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();
@@ -34,7 +36,9 @@ public class RobotController extends Thread
 		CHARGING(3),
 		GOING_HOME(4),
 		EXPLORING(5),
-		PRINT(6);
+		PRINT(6),
+		WAITING_FOR_COMMAND(7),
+		EMPTY_ME(8);
 		
 		private int value;
 		
@@ -71,6 +75,7 @@ public class RobotController extends Thread
 		this.currentPower = maxPower;
 		this.maxPower = maxPower;
 		this.setCurrentDirtCapacity(maxDirtCapacity);
+		this.maxDirtCapacity = maxDirtCapacity;
 		this.currentX = startX;
 		this.currentY = startY;
 		emptyMe = false;
@@ -82,6 +87,11 @@ public class RobotController extends Thread
 	{
 		while(true)
 		{
+			if(currentState != State.WAITING_FOR_COMMAND.getValue())
+			{
+				System.out.println("power: " + currentPower);
+			}
+			
 			//user has inputed a command on the other thread
 			if(userInputWaiting)
 			{
@@ -90,7 +100,6 @@ public class RobotController extends Thread
 				currentState = userInputState;
 			}
 			
-			System.out.println("power: " + currentPower);
 			if(State.READY_TO_CLEAN.getValue() == currentState)
 			{
 				new ReadyToCleanState().execute(this);
@@ -120,6 +129,22 @@ public class RobotController extends Thread
 			{
 				//print the floor plan in print state and set the current state to what it was before to continue execution
 				currentState = prevState;
+			}
+			else if(State.WAITING_FOR_COMMAND.getValue() == currentState)
+			{
+				if(userInputWaiting)
+				{
+					currentState = userInputState;
+				}
+				try {
+					sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			else if(State.EMPTY_ME.getValue() == currentState)
+			{
+				new EmptyMeState().execute(this);
 			}
 			else
 			{
@@ -169,11 +194,23 @@ public class RobotController extends Thread
 			userInputState = State.PRINT.getValue();
 			System.out.println("print is not implemented yet");
 		}
+		else if(userCommand.equals("empty"))
+		{
+			if(State.WAITING_FOR_COMMAND.getValue() == currentState)
+			{
+				userInputState = State.EMPTY_ME.getValue();
+				userInputWaiting = true;
+			}
+			else
+			{
+				System.out.println("Unable to perform empty action at this time");
+			}
+		}
 		else
 		{
 			return false;
 		}
-		
+		System.out.println("Processing Please Wait...");
 		return true;
 	}
 
@@ -189,5 +226,13 @@ public class RobotController extends Thread
 	 */
 	public void setCurrentDirtCapacity(int currentDirtCapacity) {
 		this.currentDirtCapacity = currentDirtCapacity;
+	}
+	
+	public void printAvailableCommands()
+	{
+		System.out.println("Available command:");
+		System.out.println("Print - prints the current state of the floor plan (NOT IMPLEMENTED)");
+		System.out.println("Stop - stops the current clean cycle");
+		System.out.println("Empty - to empty the dirt cargo bay and continue cleaning");
 	}
 }

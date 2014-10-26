@@ -12,38 +12,15 @@ public class ChargingState implements RobotStates
 		robot.currentPower = robot.maxPower;
 		if(robot.getCurrentDirtCapacity() == 0)
 		{
-			robot.emptyMe = true;
-			userAssistance = true;
-			System.out.println("----- Empty Me -----");
-			
-			Scanner scan = new Scanner(System.in);
-			System.out.println("Available commands:");
-			System.out.println("Empty - to empty the dirt cargo bay and continue cleaning");
-			System.out.println("Stop - to empty the dirt cargo bay and do not continue cleaning");
 			//wait for user input to empty the dirt cargo bay or stop clean cycle
+			userAssistance = true;
+			robot.emptyMe = true;
+			//userAssistance = true;
+			System.out.println("----- Empty Me -----");
+
+			robot.printAvailableCommands();
 			
-			while(true)
-			{
-				String userCommand = scan.nextLine().toLowerCase().trim();
-				if(userCommand.equals("emptyme"))
-				{
-					robot.emptyMe = false;
-					robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity());
-					robot.currentState = State.READY_TO_CLEAN.getValue();
-					break;
-				}
-				else if(userCommand.equals("stop"))
-				{
-					robot.emptyMe = false;
-					robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity());
-					robot.currentState = State.STOP.getValue();
-					break;
-				}
-				else
-				{
-					System.out.println("Command not recognized. Please try again.");
-				}
-			}
+			robot.currentState = State.WAITING_FOR_COMMAND.getValue();
 		}
 		
 		//all cells have been visited in this clean cycle so stop
