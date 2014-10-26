@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.Formatter;
 
-public final class LogFactory {
+public class LogFactory {
 	
 	public LogFactory () {}
 	

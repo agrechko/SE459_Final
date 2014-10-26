@@ -27,7 +27,7 @@ import javax.xml.stream.XMLStreamWriter;
 public class FloorPlan {
 	
    private Logger log;
-   private LogFactory logger;
+//   private LogFactory logger;
    private FileInputStream inputfile;
    private final static String outputfile = "floorplan.xml";
    private 	String xmlfilename;
@@ -37,7 +37,7 @@ public class FloorPlan {
 //	ArrayList<ArrayList<CellData>> sweeperMemoryGrid;//the floor plan the sweeper encounters
 
 	public FloorPlan() throws IOException {
-	    log = new LogFactory().generateLog("Floorplan", Level.INFO);
+	    log = new LogFactory().generateLog("floorplan", Level.INFO);
 	    createInputFileStream();
 	}
 	
@@ -56,14 +56,16 @@ public class FloorPlan {
 
 	private void createInputFileStream() throws IOException {
 	    try {
+	    	File f;
 	    	if (xmlfilename == null) {
-	    		File f = new File("floorplan.xml"); // System default name
+	    		f = new File("floorplan.xml"); // System default name
+	    	} else {
+		    	f = new File(xmlfilename);
 	    	}
-	    	File f = new File(xmlfilename);
 	    	if (!f.exists()) {
 	    		f.createNewFile();
 	    	}
-			inputfile = new FileInputStream(xmlfilename);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.info("ERROR: XML file location does not exist !");
@@ -118,6 +120,7 @@ public class FloorPlan {
 		XMLInputFactory factory = XMLInputFactory.newInstance();
 	 	XMLStreamReader reader;
 		try {
+			inputfile = new FileInputStream(xmlfilename);
 			reader = factory.createXMLStreamReader(inputfile);
 			while (reader.hasNext()) {
 				int event = reader.next();

@@ -15,7 +15,7 @@ public class SensorsControllerTest {
 	@Test
 	public void TestConstructor() {
 		try{
-			assertNotNull(sensor.floorplan);
+			assertNotNull(sensor.memory);
 	    	 
 	      } catch ( IllegalArgumentException e ) { 
 	    	   fail(); 
@@ -88,8 +88,8 @@ public class SensorsControllerTest {
 	public  void isAllCleanTest(){
 		
 		try {
-			for(Coord xy: sensor.floorplan.grid.keySet()) {
-				 CellData cd =  sensor.floorplan.grid.get(xy);
+			for(Coord xy: sensor.memory.grid.keySet()) {
+				 CellData cd =  sensor.memory.grid.get(xy);
 				 while(cd.getDirt()!=0) {
 				     sensor.clean(cd.getCellX(),cd.getCellY());
 				 }
