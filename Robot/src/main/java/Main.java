@@ -35,23 +35,22 @@ public class Main
 		robot.start();
 		
 		Scanner scan = new Scanner(System.in);
-//		while(true)
-//		{
-//			System.out.println("Available command:");
-//			System.out.println("Print - prints the current state of the floor plan (NOT IMPLEMENTED)");
-//			System.out.println("Stop - stops the current clean cycle");
-//			String userCommand = scan.nextLine().toLowerCase().trim();
-//			if(!robot.userInput(userCommand))
-//			{
-//				System.out.println("Command not recognized. Please try again.");
-//			}
-//			else
-//			{
-//				if(userCommand.equals("stop"))
-//				{
-//					break;
-//				}
-//			}
-//		}
+		robot.printAvailableCommands();
+		while(true)
+		{
+			String userCommand = scan.nextLine().toLowerCase().trim();
+			if(!robot.userInput(userCommand))
+			{
+				System.out.println("Command not recognized. Please try again.");
+				robot.printAvailableCommands();
+			}
+			else
+			{
+				if(userCommand.equals("stop"))
+				{
+					break;
+				}
+			}
+		}
 	}
 }
