@@ -43,7 +43,8 @@ public class SensorsController
 		if ( cd == null ) {
 			cd = new CellData(x, y);
 //			floorplan.grid.put(c, cd);
-			log.info("Creating new cell object and sensing dirt and surface type");
+//			log.info("Creating new cell object and sensing dirt and surface type");
+			System.out.println("Creating new cell object and sensing dirt and surface type");
             cd = sample.getcell(x, y);
 		} 
 		return cd;		
@@ -54,6 +55,7 @@ public class SensorsController
 		CellData cd = memory.grid.get(c);
 		if (cd == null) {
 			cd = sample.getcell(x , y);
+			System.out.println("Pulling data from sample.xml into memory");
 			memory.grid.put(c, cd);
 		}
 	}
