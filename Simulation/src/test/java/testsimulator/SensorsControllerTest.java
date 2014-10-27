@@ -1,17 +1,23 @@
 package testsimulator;
 import objectsDTO.CellData;
 import objectsDTO.Coord;
-
 import sensors.SensorsController;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class SensorsControllerTest {
 	String floorPlanLocation = "../Simulation/sample_floorplan.xml";
-    SensorsController sensor = new SensorsController(floorPlanLocation) ;
-
+    SensorsController sensor = new SensorsController(floorPlanLocation);
+    
+    @Before
+    public void setUp() {
+        sensor.getCell(0, 0); // Setup test cell 
+        sensor.getCell(5, 7); // Setup test cell 
+    }
+    
 	@Test
 	public void TestConstructor() {
 		try{
@@ -24,15 +30,12 @@ public class SensorsControllerTest {
 	
 	@Test 
 	public  void getPathsTest(){
-	//	int x int y;
-	try{
-		int[] expected = {1,2,1,2};
-		   int[] Paths = sensor.getPaths(0, 0);
-	//	   sensor.floorplan
-			   assertArrayEquals( expected, Paths);
-			   
+		try {
+			int[] expected = {1,2,1,2};
+			int[] Paths = sensor.getPaths(0, 0);
+		    assertArrayEquals( expected, Paths);
 	      } catch ( IllegalArgumentException e ) { 
-	    	    fail();
+    	    fail();
 	      }
 		
 	}
@@ -42,13 +45,12 @@ public class SensorsControllerTest {
 	public  void cleanTest(){
 		CellData cd = sensor.getCell(0, 0);
 		try{
-			int curDirt00= 1; 
-			int actualDirt= cd.getDirt();
-			assertTrue(curDirt00 == actualDirt );
+			int curDirt00 = 1; 
+			int actualDirt = cd.getDirt();
+			assertTrue(curDirt00 == actualDirt);
 			sensor.clean(0, 0);
 			int newDirt= cd.getDirt();
-			
-			assertTrue(0 == newDirt );
+			assertTrue(0 == newDirt);
 	      } catch ( IllegalArgumentException e ) { 
 	    	  fail();  
 	      }
@@ -85,17 +87,27 @@ public class SensorsControllerTest {
 		}
 	
 	@Test 
-	public  void isAllCleanTest(){
-		
+	public  void isAllCleanTest() {		
 		try {
-			for(Coord xy: sensor.memory.grid.keySet()) {
-				 CellData cd =  sensor.memory.grid.get(xy);
-				 while(cd.getDirt()!=0) {
-				     sensor.clean(cd.getCellX(),cd.getCellY());
-				 }
+			
+			for (Coord xy: sensor.memory.grid.keySet()) {
+			    CellData cd =  sensor.memory.grid.get(xy);
+				while(cd.getDirt() != 0) {
+				     sensor.clean(cd.getCellX(), cd.getCellY());
+				}
+			}
+			assertFalse(sensor.isAllClean());
+			for (int i = 0; i < 50; i++) {
+				for (int j = 0; j < 50; j++) {
+					CellData cd = sensor.getCell(i, j);
+					if (cd != null) {
+						while (cd.getDirt() > 0) {
+							sensor.clean(i, j);
+						}
+					}
+				}
 			}
 			assertTrue(sensor.isAllClean());
-
           } catch ( IllegalArgumentException e ) { 
         	fail();    
           }
