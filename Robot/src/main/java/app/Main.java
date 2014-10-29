@@ -32,8 +32,9 @@ public class Main
 		
 		SensorsController sensors = new SensorsController(floorPlanLocation);
 		
-		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY,
-				sensors.getChargingStationLocation().getCellX(), sensors.getChargingStationLocation().getCellY());
+//		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY,
+//				sensors.getChargingStationLocation().getCellX(), sensors.getChargingStationLocation().getCellY());
+		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, 0, 0);
 		robot.start();
 		
 		Scanner scan = new Scanner(System.in);
