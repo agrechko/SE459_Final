@@ -8,4 +8,27 @@
   	<artifactId>Sweeper</artifactId>
   	<version>0.0.1-SNAPSHOT</version>
   </parent>
+  <dependencies>
+    <dependency>
+      <groupId>Simulation</groupId>
+      <artifactId>Simulation</artifactId>
+      <version>0.0.3-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>app.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
