@@ -1,5 +1,6 @@
 package robot;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -9,8 +10,10 @@ public class RobotController extends Thread
 {
 	public boolean devModeOn = false;//used for testing purposes
 	public LinkedList<int[]> devpaths;//hard coded paths for testing
+	public LinkedList<String> devCommands;
 	
 	SensorsController sensors;
+	boolean firstStart = true;//flag to state if this is the first time exploring is starting
 	public int currentState = State.READY_TO_CLEAN.getValue();
 	int prevState;
 	int currentPower;//starts at maximum power and counts down to zero which means we ran out of power
@@ -132,6 +135,10 @@ public class RobotController extends Thread
 			}
 			else if(State.WAITING_FOR_COMMAND.getValue() == currentState)
 			{
+				if(devModeOn && !userInputWaiting)
+				{
+					userInput(devCommands.pop());
+				}
 				if(userInputWaiting)
 				{
 					currentState = userInputState;
@@ -176,6 +183,9 @@ public class RobotController extends Thread
 			break;
 		case 4:
 			powerConsumption = 3;
+			break;
+		default:
+			new Exception("unknown floor type encountered");
 			break;
 		}
 		return powerConsumption;
