@@ -28,8 +28,7 @@ public class GoingHomeState implements RobotStates
 			robot.currentPower -= robot.getPowerConsumption(floorType);
 		}
 		System.out.println("going home! currently at x: " + robot.currentX + " y: " + robot.currentY);
-		if(robot.currentX == robot.sensors.getChargingStationLocation().getCellX() &&
-				robot.currentY == robot.sensors.getChargingStationLocation().getCellY())
+		if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
 		{
 			robot.currentState = State.CHARGING.getValue();
 		}

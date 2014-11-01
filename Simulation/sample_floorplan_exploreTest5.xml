@@ -1,0 +1,9 @@
+<home>
+<floor level ='1'>
+<cell xs='0' ys='0' ss='1' ps='1212 ' ds='0' cs='1' />
+<cell xs='1' ys='0' ss='1' ps='1222 ' ds='0' cs='0' />
+<cell xs='2' ys='0' ss='1' ps='2122 ' ds='0' cs='0' />
+<cell xs='0' ys='1' ss='1' ps='2212 ' ds='0' cs='0' />
+<cell xs='0' ys='2' ss='1' ps='2221 ' ds='0' cs='0' />
+</floor >
+</home >
