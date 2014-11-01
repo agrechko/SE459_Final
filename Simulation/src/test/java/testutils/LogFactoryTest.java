@@ -11,28 +11,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 import java.util.logging.Formatter;
-
-//public class SensorsControllerTest {
-//	String floorPlanLocation = "../Simulation/sample_floorplan.xml";
-//    SensorsController sensor = new SensorsController(floorPlanLocation);
-//    
-//    @Before
-//    public void setUp() {
-//        sensor.getCell(0, 0); // Setup test cell 
-//        sensor.getCell(5, 7); // Setup test cell 
-//    }
-    
-//	@Test
-//	public void TestConstructor() {
-//		try{
-//			assertNotNull(sensor.memory);
-//	    	 
-//	      } catch ( IllegalArgumentException e ) { 
-//	    	   fail(); 
-//	      }
-//	  }
 
 class TestFormatter extends Formatter {
 
@@ -64,12 +43,15 @@ public class LogFactoryTest {
 		testLog = testLF.generateLog("test", Level.INFO);
 		assertEquals(testLog.getLevel(), Level.INFO);
 
+
+	}
+	@Test
+	public void test_generateLog2() {
 		Logger testLog1 = testLF.generateLog("test", Level.INFO, new TestFormatter());
 		for (Handler lh1: testLog1.getHandlers()) {
 			System.out.println(lh1.getFormatter());
 			assertTrue(lh1.getFormatter() instanceof TestFormatter);
 		}
-
 	}
 
 }
