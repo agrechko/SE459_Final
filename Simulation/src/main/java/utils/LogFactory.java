@@ -10,11 +10,24 @@ import java.util.logging.Formatter;
 public class LogFactory {
 	
 	public LogFactory () {}
-	
-	public Logger generateLog() {
-		Logger log = Logger.getAnonymousLogger();
+
+	public Logger generateLog(String name, Level level, Formatter format) {
+		Logger log = Logger.getLogger(name);
 		log.setUseParentHandlers(false);
-		log.setLevel(Level.ALL);
+		log.setLevel(level);
+		ConsoleHandler hdlr = new ConsoleHandler();
+//		System.out.println(format);
+		hdlr.flush();
+		hdlr.setFormatter(format);
+//		System.out.println(hdlr.getFormatter());
+		log.addHandler(hdlr);
+		return log;
+	}
+
+	public Logger generateLog(String name, Level level) {
+		Logger log = Logger.getLogger(name);
+		log.setUseParentHandlers(false);
+		log.setLevel(level);
 		ConsoleHandler hdlr = new ConsoleHandler();
 		hdlr.setFormatter(new ProjectLogFormat());
 		log.addHandler(hdlr);
@@ -31,28 +44,14 @@ public class LogFactory {
 		return log;
 	}
 
-	public Logger generateLog(String name, Level level) {
-		Logger log = Logger.getLogger(name);
+	public Logger generateLog() {
+		Logger log = Logger.getAnonymousLogger();
 		log.setUseParentHandlers(false);
-		log.setLevel(level);
+		log.setLevel(Level.ALL);
 		ConsoleHandler hdlr = new ConsoleHandler();
 		hdlr.setFormatter(new ProjectLogFormat());
 		log.addHandler(hdlr);
 		return log;
-	}
-	
-	public Logger generateLog(String name, Level level, Formatter format) {
-		Logger log = Logger.getLogger(name);
-		log.setUseParentHandlers(false);
-		log.setLevel(level);
-		ConsoleHandler hdlr = new ConsoleHandler();
-		hdlr.setFormatter(format);
-		log.addHandler(hdlr);
-		return log;
-	}
-	
-	private static void main(String args[]) {
-		
 	}
 
 }
