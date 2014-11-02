@@ -126,6 +126,7 @@ public class RobotController extends Thread
 			else if (State.STOP.getValue() == currentState)
 			{
 				new StopState().execute(this);
+				printStopCommands();
 				break;
 			}
 			else if(State.PRINT.getValue() == currentState)
@@ -194,6 +195,7 @@ public class RobotController extends Thread
 	//return true if the user command has been recognized else false
 	public boolean userInput(String userCommand)
 	{
+		System.out.println("Processing Please Wait...");
 		if(userCommand.equals("stop"))
 		{
 			userInputState = State.STOP.getValue();
@@ -220,7 +222,6 @@ public class RobotController extends Thread
 		{
 			return false;
 		}
-		System.out.println("Processing Please Wait...");
 		return true;
 	}
 
@@ -245,4 +246,12 @@ public class RobotController extends Thread
 		System.out.println("Stop - stops the current clean cycle");
 		System.out.println("Empty - to empty the dirt cargo bay and continue cleaning");
 	}
+	
+	public void printStopCommands()
+	{
+		System.out.println("Available command:");
+		System.out.println("restart - start a new clean cycle");
+		System.out.println("Shutdown - turns off the robot");
+	}
+	
 }
