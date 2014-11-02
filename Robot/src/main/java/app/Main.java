@@ -73,6 +73,7 @@ public class Main
 				{
 					System.out.println("Command not recognized. Please try again.");
 					robot.printStopCommands();
+					continue;
 				}
 			}
 			
