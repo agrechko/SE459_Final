@@ -26,8 +26,8 @@ public class RobotController extends Thread
 	int currentCleaningApparatus = 0;
 	Boolean emptyMe;
 	Boolean userInputWaiting;
-	int userInputState;
-	int userInputCommand = -1;//0 = empty 
+	int userInputState = -1;
+	int userInputCommand;
 	
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();
@@ -127,7 +127,7 @@ public class RobotController extends Thread
 			else if (State.STOP.getValue() == currentState)
 			{
 				new StopState().execute(this);
-				if(userInputCommand != State.STOP.getValue())
+				if(userInputState != State.STOP.getValue())
 					printStopCommands();
 				break;
 			}

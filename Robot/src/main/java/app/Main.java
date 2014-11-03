@@ -34,8 +34,8 @@ public class Main
 	public static boolean startLoop(String[] args)
 	{
 		boolean restart = false;
-		//String floorPlanLocation = "../Simulation/sample_floorplan.xml";
-		String floorPlanLocation = "../Simulation/sample_floorplan_small_room.xml";
+		String floorPlanLocation = "../Simulation/sample_floorplan.xml";
+		//String floorPlanLocation = "../Simulation/sample_floorplan_small_room.xml";
 		if(args.length == 1)
 			floorPlanLocation = args[0];
 		
