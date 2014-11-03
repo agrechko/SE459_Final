@@ -27,7 +27,7 @@ public class RobotController extends Thread
 	Boolean emptyMe;
 	Boolean userInputWaiting;
 	int userInputState;
-	int userInputCommand;//0 = empty 
+	int userInputCommand = -1;//0 = empty 
 	
 	//this is the route that the sweeper took; pop off the stack to return home. 1: x neg, 2: x pos, 3: y pos, 4: y neg 
 	Stack<Integer> route = new Stack<Integer>();
@@ -101,6 +101,7 @@ public class RobotController extends Thread
 				userInputWaiting = false;
 				prevState = currentState;
 				currentState = userInputState;
+				System.out.println("Input processed");
 			}
 			
 			if(State.READY_TO_CLEAN.getValue() == currentState)
@@ -126,7 +127,8 @@ public class RobotController extends Thread
 			else if (State.STOP.getValue() == currentState)
 			{
 				new StopState().execute(this);
-				printStopCommands();
+				if(userInputCommand != State.STOP.getValue())
+					printStopCommands();
 				break;
 			}
 			else if(State.PRINT.getValue() == currentState)
@@ -205,6 +207,7 @@ public class RobotController extends Thread
 		{
 			userInputState = State.PRINT.getValue();
 			System.out.println("print is not implemented yet");
+			printAvailableCommands();
 		}
 		else if(userCommand.equals("empty"))
 		{
