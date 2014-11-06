@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import utils.LogFactory;
+
 import java.util.logging.Level;
 
 import javax.xml.stream.XMLInputFactory;
@@ -26,7 +26,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 public class FloorPlan {
 	
-   private Logger log;
+   Logger logger = Logger.getLogger("main");
 //   private LogFactory logger;
    private FileInputStream inputfile;
    private final static String outputfile = "floorplan.xml";
@@ -37,14 +37,12 @@ public class FloorPlan {
 //	ArrayList<ArrayList<CellData>> sweeperMemoryGrid;//the floor plan the sweeper encounters
 
 	public FloorPlan() throws IOException {
-	    log = new LogFactory().generateLog("floorplan", Level.INFO);
 	    createInputFileStream();
 	}
 	
 	//Sample floorplan, floorPlanLocation is the physical drive location
 	public FloorPlan(String floorPlanLocation) throws IOException {
 	    try {
-		    log = new LogFactory().generateLog();
 		    xmlfilename = floorPlanLocation;
 		    createInputFileStream();
 			read();
@@ -68,7 +66,7 @@ public class FloorPlan {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			log.info("ERROR: XML file location does not exist !");
+			logger.info("ERROR: XML file location does not exist !");
 			throw new IOException();			
 		}
 
@@ -81,7 +79,7 @@ public class FloorPlan {
 			String atName = reader.getAttributeLocalName(i);
 			Integer atValue = Integer.parseInt(reader.getAttributeValue(i).trim());
 // 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
-//			log.info("ATTRIBUTE: " + atName + ", " + atValue);
+			logger.log(Level.FINE, "ATTRIBUTE: " + atName + ", " + atValue);
 			switch(atName) {
 				case "xs": 
 					cd.setCellX(atValue);
