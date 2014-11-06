@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import robot.RobotController;
 import robot.RobotController.State;
 import sensors.SensorsController;
-import utils.LogFactory;
+import utils.ProjectLog;
 
 
 public class Main 
@@ -17,11 +17,13 @@ public class Main
 	final static int START_X = 0;
 	final static int START_Y = 0;
 	int command = -1;//command user issues after the clean cycle has ended
-//    Loggelog = new LogFactory().generateLog("Floorplan", Level.INFO);
-
 		
 	public static void main(String[] args) throws Exception 
 	{
+		ProjectLog pl = new ProjectLog();
+        if (args.length == 2 && args[1] == "debug") {       		
+            pl.addConsole();
+        }
 		while(true)
 		{
 			if(!startLoop(args))
@@ -72,7 +74,7 @@ public class Main
 				else
 				{
 					System.out.println("Command not recognized. Please try again.");
-					robot.printStopCommands();
+					robot.printAvailableCommands();
 					continue;
 				}
 			}

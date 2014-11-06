@@ -3,11 +3,12 @@ import java.util.logging.Logger;
 
 import org.junit.*;
 
-import utils.LogFactory;
+import utils.ProjectLog;
 import utils.ProjectLogFormat;
 import static org.junit.Assert.*;
 
 import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -21,33 +22,28 @@ class TestFormatter extends Formatter {
 	}
 }
 
-public class LogFactoryTest {
-	LogFactory testLF = new LogFactory();
-
+public class ProjectTest {
+	ProjectLog pl = new ProjectLog();
+	Logger l = Logger.getLogger("main");
+			
 	@Test
-	public void test_generateLog2() {
-		Logger testLog1 = testLF.generateLog("test", Level.INFO, new TestFormatter());
-		for (Handler lh1: testLog1.getHandlers()) {
-			assertTrue(lh1.getFormatter() instanceof TestFormatter);
-		}
-	}
-	
-	@Test
-	public void test_generateLog() {
-		Logger testLog = testLF.generateLog();
-		assertEquals(testLog.getLevel(), Level.ALL);
-		assertEquals(testLog.getName(), null);
-		for (Handler lh: testLog.getHandlers()) {
-			assertTrue( lh instanceof ConsoleHandler );
+	public void test_setup() {
+		
+		assertEquals(l.getLevel(), Level.FINE);
+		assertEquals(l.getName(), "main");
+		for (Handler lh: l.getHandlers()) {
+			assertTrue( lh instanceof FileHandler );
 			assertTrue(lh.getFormatter() instanceof ProjectLogFormat);
 		}
+				
+		pl.addConsole();
+		for (Handler lh: l.getHandlers()) {
+			if ((lh instanceof FileHandler) == false) {
+			    assertTrue( lh instanceof ConsoleHandler );
+			}
+		}
 		
-		testLog = testLF.generateLog("test");
-		assertEquals(testLog.getName(), "test");
-
-		testLog = testLF.generateLog("test", Level.INFO);
-		assertEquals(testLog.getLevel(), Level.INFO);
 	}
-	
+		
 
 }

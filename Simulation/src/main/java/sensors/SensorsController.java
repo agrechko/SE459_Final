@@ -8,20 +8,18 @@ import java.util.logging.Logger;
 
 import objectsDTO.CellData;
 import objectsDTO.Coord;
-import utils.LogFactory;
 
 public class SensorsController 
 {
 	public FloorPlan memory;
 	private SampleFloorplan sample;
-	private Logger log;
+    Logger logger = Logger.getLogger("main");
 
 	public SensorsController(String floorPlanPath) 
 	{
 		try {
 			memory = new FloorPlan();
 			sample = new SampleFloorplan(floorPlanPath);
-			log = new LogFactory().generateLog("floorplan", Level.INFO);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +41,7 @@ public class SensorsController
 		if ( cd == null ) {
 			cd = new CellData(x, y);
 //			log.info("Creating new cell object and sensing dirt and surface type");
-			System.out.println("Creating new cell object and sensing dirt and surface type");
+//			System.out.println("Creating new cell object and sensing dirt and surface type");
             cd = sample.getcell(x, y);
             memory.grid.put(c, cd);
 		} 
@@ -55,7 +53,7 @@ public class SensorsController
 		CellData cd = memory.grid.get(c);
 		if (cd == null) {
 			cd = sample.getcell(x , y);
-			System.out.println("Pulling data from sample.xml into memory");
+			logger.log(Level.FINE, "Pulling data from sample.xml into memory");
 			memory.grid.put(c, cd);
 		}
 	}
@@ -89,14 +87,13 @@ public class SensorsController
 	//this method return if the current location is clean or not
 	public boolean isClean(int x, int y) //TODO Test this
 	{
-//		memcheck(x, y);
+		memcheck(x, y);
 		Coord c = new Coord(x, y);
 		CellData cd = memory.grid.get(c);
 		int CurrentDirt = cd.getDirt();
 		if (CurrentDirt == 0 ){
-		return true;
-		}
-		else {
+			return true;
+		} else {
 			return false; 
 		}
 	}

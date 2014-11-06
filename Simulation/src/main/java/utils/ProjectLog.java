@@ -1,57 +1,49 @@
 package utils;
 
+import java.io.IOException;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.Formatter;
 
 
-public class LogFactory {
+public class ProjectLog {
 	
-	public LogFactory () {}
+	Logger logger;
+	FileHandler fhdlr;
+	
+	public ProjectLog () {		
+		logger = Logger.getLogger("main");
+		setFileHandler();
+		setup();
+	}
+	
+	private void setFileHandler() {
+		FileHandler hdlr = null;
+		try {
+			hdlr = new FileHandler("clean_sweep.log");
+			hdlr.setFormatter(new ProjectLogFormat());
+			logger.addHandler(hdlr);
+			 
+		} catch (IOException ioe) {
+			System.out.println("Unable to open log file: " + ioe);
+		} catch (SecurityException se) {
+			System.out.println("Unable to open log file: " + se);
+		}
 
-	public Logger generateLog(String name, Level level, Formatter format) {
-		Logger log = Logger.getLogger(name);
-		log.setUseParentHandlers(false);
-		log.setLevel(level);
-		ConsoleHandler hdlr = new ConsoleHandler();
-//		System.out.println(format);
-		hdlr.flush();
-		hdlr.setFormatter(format);
-//		System.out.println(hdlr.getFormatter());
-		log.addHandler(hdlr);
-		return log;
+	}
+	
+	public void setup() {
+		logger.setUseParentHandlers(false);
+		logger.setLevel(Level.FINE);
 	}
 
-	public Logger generateLog(String name, Level level) {
-		Logger log = Logger.getLogger(name);
-		log.setUseParentHandlers(false);
-		log.setLevel(level);
-		ConsoleHandler hdlr = new ConsoleHandler();
-		hdlr.setFormatter(new ProjectLogFormat());
-		log.addHandler(hdlr);
-		return log;
+	public void addConsole() {		
+		ConsoleHandler chdlr = new ConsoleHandler();
+		chdlr.setFormatter(new ProjectLogFormat());
+	    logger.addHandler(chdlr);		    
 	}
-
-	public Logger generateLog(String name) {
-		Logger log = Logger.getLogger(name);
-		log.setUseParentHandlers(false);
-		log.setLevel(Level.ALL);
-		ConsoleHandler hdlr = new ConsoleHandler();
-		hdlr.setFormatter(new ProjectLogFormat());
-		log.addHandler(hdlr);
-		return log;
-	}
-
-	public Logger generateLog() {
-		Logger log = Logger.getAnonymousLogger();
-		log.setUseParentHandlers(false);
-		log.setLevel(Level.ALL);
-		ConsoleHandler hdlr = new ConsoleHandler();
-		hdlr.setFormatter(new ProjectLogFormat());
-		log.addHandler(hdlr);
-		return log;
-	}
-
+	
 }
