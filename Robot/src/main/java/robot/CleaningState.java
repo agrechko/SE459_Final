@@ -23,13 +23,19 @@ public class CleaningState implements RobotStates
 			{
 				robot.currentState = State.EXPLORING.getValue();
 			}
+			else if(robot.currentPower - robot.getPowerConsumption(robot.sensors.getSurface(robot.currentX, robot.currentY)) <= (robot.maxPower/2))
+			{
+				//added this else if because of the case that we clean a cell and power become less than half
+				robot.currentState = State.GOING_HOME.getValue();
+			}
 			else
 			{
 				System.out.println("before "+robot.sensors.getCell(robot.currentX, robot.currentY).getDirt());
 				surface = robot.sensors.getSurface(robot.currentX, robot.currentY);
 				robot.sensors.clean(robot.currentX, robot.currentY);
 				robot.setCurrentDirtCapacity(robot.getCurrentDirtCapacity() - 1); 
-				robot.currentPower = robot.currentPower - surface;
+				//robot.currentPower = robot.currentPower - surface;//incorrect because high carpet will cost 4 units this way but should be 3
+				robot.currentPower = robot.currentPower - robot.getPowerConsumption(surface);
 				System.out.println("After "+robot.sensors.getCell(robot.currentX, robot.currentY).getDirt());
 				System.out.println("current dirt capacity "+ robot.getCurrentDirtCapacity());
 			}

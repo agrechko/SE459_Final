@@ -78,13 +78,36 @@ public class ExploringState implements RobotStates
 					Random gen = new Random();
 					Boolean selected = false;
 					int selectedPath = -1;
+					
+					//unvisited paths indexes from the available path indexes in pathsIndexes array
+					ArrayList<Integer> dirtyPaths = new ArrayList<Integer>();
+					for(Integer i : pathsIndexes)
+					{
+						if(!getCleanStatus(robot, i)){
+							dirtyPaths.add(i);
+						}
+					}
+
+					while(!selected && dirtyPaths.size() > 0)//pick a random unvisited path to go to
+					{
+						int selectedIndex = gen.nextInt(dirtyPaths.size());
+						selectedPath = dirtyPaths.get(selectedIndex);//gets a random unvisited path
+						floorType = getFloorType(robot, selectedPath);
+						if(checkIfEnoughPowerToMove(robot, floorType))
+						{
+							selected = true;
+							continue;
+						}
+						dirtyPaths.remove(selectedIndex);
+					}
+					
 					while(!selected && pathsIndexes.size() > 0)
 					{
 						int selectedIndex = gen.nextInt(pathsIndexes.size());
 						selectedPath = pathsIndexes.get(selectedIndex);
-						floorType = robot.sensors.getSurface(robot.currentX, robot.currentY);
+						floorType = getFloorType(robot, selectedPath);//robot.sensors.getSurface(robot.currentX, robot.currentY);
 							
-						if(robot.currentPower - robot.getPowerConsumption(floorType) >= robot.maxPower/2)
+						if(checkIfEnoughPowerToMove(robot, floorType))
 						{
 							selected = true;
 							continue;
@@ -97,26 +120,9 @@ public class ExploringState implements RobotStates
 					}
 					else
 					{
+						//going home because we were not able to go to any of the available paths, meaning we do not have enough power to go to them
 						robot.currentState = State.GOING_HOME.getValue();
 					}
-						//unvisited paths indexes from the available path indexes in pathsIndexes array
-		//				ArrayList<Integer> unvisitedPaths = new ArrayList<Integer>();
-		//				for(Integer i : pathsIndexes)
-		//				{
-		//					if(!getVisitStatus(robot, i)){
-		//						unvisitedPaths.add(i);
-		//					}
-		//				}
-		//				
-		//				int numUnvisitedPaths = unvisitedPaths.size();
-		//				if(numUnvisitedPaths != 0)//pick a random unvisited path to go to
-		//				{
-		//					
-		//				}
-		//				else
-		//				{
-		//					goBackOneStep(robot);
-		//				}
 				}
 				
 				if(robot.currentState != State.GOING_HOME.getValue())
@@ -138,6 +144,11 @@ public class ExploringState implements RobotStates
 				}
 			}
 		}
+	}
+	
+	private boolean checkIfEnoughPowerToMove(RobotController robot, int floorType)
+	{
+		return robot.currentPower - robot.getPowerConsumption(floorType) > robot.maxPower/2;
 	}
 	
 	private void move(RobotController robot, int selectedPath)
@@ -162,22 +173,26 @@ public class ExploringState implements RobotStates
 		}
 	}
 	
-	//call sensors to check is the given path has been visited
-	private boolean getVisitStatus(RobotController robot, int i)
+	//call sensors to check is the given path has dirt
+	private boolean getCleanStatus(RobotController robot, int i)
 	{
 		boolean status = false;
 		switch(i){
 		case 0:
-			status = robot.sensors.isVisited(robot.currentX + 1, robot.currentY);
+			robot.sensors.getCell(robot.currentX + 1, robot.currentY);//gets basic information about adjacent cell into memory
+			status = robot.sensors.isClean(robot.currentX + 1, robot.currentY);//checks to see if the adjacent cell is clean
 			break;
 		case 1:
-			status = robot.sensors.isVisited(robot.currentX - 1, robot.currentY);
+			robot.sensors.getCell(robot.currentX - 1, robot.currentY);
+			status = robot.sensors.isClean(robot.currentX - 1, robot.currentY);
 			break;
 		case 2:
-			status = robot.sensors.isVisited(robot.currentX, robot.currentY + 1);
+			robot.sensors.getCell(robot.currentX, robot.currentY + 1);
+			status = robot.sensors.isClean(robot.currentX, robot.currentY + 1);
 			break;
 		case 3:
-			status = robot.sensors.isVisited(robot.currentX, robot.currentY - 1);
+			robot.sensors.getCell(robot.currentX, robot.currentY - 1);
+			status = robot.sensors.isClean(robot.currentX, robot.currentY - 1);
 			break;
 		}
 		return status;
@@ -204,5 +219,26 @@ public class ExploringState implements RobotStates
 			robot.wentBackFrom = 3;
 			break;
 		}
+	}
+	
+	//looks up the floor type of an adjacent cell to make sure we have enough power to move there
+	public int getFloorType(RobotController robot, int selectedPath)
+	{
+		int floorType = -1;
+		switch(selectedPath){
+		case 0: 
+			floorType = robot.sensors.getCell(robot.currentX + 1, robot.currentY).getSurface();
+			break;
+		case 1:
+			floorType = robot.sensors.getCell(robot.currentX - 1, robot.currentY).getSurface();
+			break;
+		case 2:
+			floorType = robot.sensors.getCell(robot.currentX, robot.currentY + 1).getSurface();
+			break;
+		case 3:
+			floorType = robot.sensors.getCell(robot.currentX, robot.currentY - 1).getSurface();
+			break;
+		}
+		return floorType;
 	}
 }
