@@ -11,19 +11,6 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Formatter;
-
-class TestFormatter extends Formatter {
-	
-	private TestFormatter() {}
-	
-	@Override
-	public String format(LogRecord arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-}
 
 public class ProjectTest {
 	ProjectLog pl = new ProjectLog();
