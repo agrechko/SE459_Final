@@ -15,6 +15,9 @@ import java.util.logging.LogRecord;
 import java.util.logging.Formatter;
 
 class TestFormatter extends Formatter {
+	
+	private TestFormatter() {}
+	
 	@Override
 	public String format(LogRecord arg0) {
 		// TODO Auto-generated method stub
