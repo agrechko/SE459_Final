@@ -173,6 +173,18 @@ public class RobotController extends Thread
 	public int getCurrentPower(){
 		return currentPower;
 	}
+	public int currentCleaningApparatus(){
+		if (CleaningApparatus.APP_BARE_FLOOR.getValue() == currentCleaningApparatus()){
+			currentCleaningApparatus = CleaningApparatus.APP_BARE_FLOOR.getValue();
+		}
+		else if (CleaningApparatus.APP_LOW_CARPET.getValue() == currentCleaningApparatus()){
+			currentCleaningApparatus = CleaningApparatus.APP_LOW_CARPET.getValue();
+		}
+		else if (CleaningApparatus.APP_HIGH_CARPET.getValue() == currentCleaningApparatus()){
+			currentCleaningApparatus = CleaningApparatus.APP_HIGH_CARPET.getValue();
+		}
+		return currentCleaningApparatus;
+	}
 	
 	public int getPowerConsumption(int floorType)
 	{
