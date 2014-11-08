@@ -67,8 +67,8 @@ public class SensorsController
 		
 	}
 	
-	//this sets the surrounding coordinates of the current location  //TODO
-	private void setPaths(int x, int y, int[] paths)// Rahmo:I think we should add x and y so we can know where is the current location?
+	//this sets the surrounding coordinates of the current location  
+	private void setPaths(int x, int y, int[] paths)
 	{
 		CellData cd = memory.grid.get(new Coord(x, y));
 		cd.setPaths(paths);
@@ -85,8 +85,7 @@ public class SensorsController
 	}
 	
 	//this method return if the current location is clean or not
-	public boolean isClean(int x, int y) //TODO Test this
-	{
+	public boolean isClean(int x, int y) {
 		memcheck(x, y);
 		Coord c = new Coord(x, y);
 		CellData cd = memory.grid.get(c);
@@ -99,19 +98,15 @@ public class SensorsController
 	}
 	
 	//this method returns an int 1: bare floor, 2: low carpet, 4: high carpet
-	public int getSurface(int x, int y)
-	{
-//		int[] xy = new int[] {x,y};
-//		CellData cd = new CellData();
-//		cd = floorplan.grid.get(new Coord(x, y));
+	public int getSurface(int x, int y){
+
 		return memory.grid.get(new Coord(x, y)).getSurface();
 	}
 	
 	//this method sets the surface for current location surface value are 1: bare floor, 2: low carpet, 3: high carpet
 	public void setSurface(int x, int y, int surfaceValue)
 	{
-//		int[] xy = new int[] {x,y};
-//		CellData cd = new CellData();
+
 		CellData cd = memory.grid.get(new Coord(x, y));
 		cd.setSurface(surfaceValue);
 		
@@ -126,7 +121,6 @@ public class SensorsController
 			} else if (cd.getDirt() > 0){
 				return false; 
 			} else { 
-				// continue
 			}
 		}
 		return true;
@@ -137,7 +131,7 @@ public class SensorsController
 		for(Coord xy: memory.grid.keySet()) {
 			cd = memory.grid.get(xy);
 			if (cd.isChargingStation() == true) {
-//				System.out.println(cd);
+
 				return cd;
 			} 
 		}
