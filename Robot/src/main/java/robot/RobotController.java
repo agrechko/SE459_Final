@@ -1,8 +1,9 @@
 package robot;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import sensors.SensorsController;
 
@@ -11,6 +12,8 @@ public class RobotController extends Thread
 	public boolean devModeOn = false;//used for testing purposes
 	public LinkedList<int[]> devpaths;//hard coded paths for testing
 	public LinkedList<String> devCommands;
+	
+	Logger logger = Logger.getLogger("main");
 	
 	SensorsController sensors;
 	boolean firstStart = true;//flag to state if this is the first time exploring is starting
@@ -92,7 +95,7 @@ public class RobotController extends Thread
 		{
 			if(currentState != State.WAITING_FOR_COMMAND.getValue())
 			{
-				System.out.println("power: " + currentPower);
+				logger.log(Level.FINE, "power: " + currentPower);
 			}
 			
 			//user has inputed a command on the other thread

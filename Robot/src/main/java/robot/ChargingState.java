@@ -1,7 +1,5 @@
 package robot;
 
-import java.util.Scanner;
-
 import robot.RobotController.State;
 
 public class ChargingState implements RobotStates

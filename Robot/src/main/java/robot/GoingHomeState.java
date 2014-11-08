@@ -1,9 +1,12 @@
 package robot;
 
 import robot.RobotController.State;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GoingHomeState implements RobotStates
 {
+	Logger logger = Logger.getLogger("main");
 	public void execute(RobotController robot) 
 	{
 		if(robot.route.size() != 0)
@@ -27,7 +30,7 @@ public class GoingHomeState implements RobotStates
 			int floorType = robot.sensors.getSurface(robot.currentX, robot.currentY);
 			robot.currentPower -= robot.getPowerConsumption(floorType);
 		}
-		System.out.println("going home! currently at x: " + robot.currentX + " y: " + robot.currentY);
+		logger.log(Level.FINE, "going home! currently at x: " + robot.currentX + " y: " + robot.currentY);
 		if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
 		{
 			robot.currentState = State.CHARGING.getValue();

@@ -2,11 +2,15 @@ package robot;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import robot.RobotController.State;
 
 public class ExploringState implements RobotStates
 {
+	Logger logger = Logger.getLogger("main");
+	
 	public void execute(RobotController robot) 
 	{
 		if(robot.firstStart)
@@ -15,7 +19,7 @@ public class ExploringState implements RobotStates
 			int[] paths = robot.sensors.getPaths(robot.currentX, robot.currentY);//this is needed so that sensors scan the current cell for info
 			if(!robot.sensors.isClean(robot.currentX, robot.currentY))
 			{
-				System.out.println("Entering cleaning mode");
+				logger.log(Level.FINE, "Entering cleaning mode");
 				robot.currentState = State.CLEANING.getValue();
 			}
 		}
@@ -127,8 +131,7 @@ public class ExploringState implements RobotStates
 				
 				if(robot.currentState != State.GOING_HOME.getValue())
 				{
-//					System.out.println("Current Location x: " + robot.currentX +" y: " + robot.currentY);
-					System.out.println("Currently: " + robot.sensors.getCell(robot.currentX, robot.currentY));
+					logger.log(Level.FINE, "Currently: " + robot.sensors.getCell(robot.currentX, robot.currentY));
 					robot.currentPower -= robot.getPowerConsumption(floorType);
 					
 					if(robot.sensors.getCell(robot.currentX, robot.currentY).isChargingStation())
@@ -138,7 +141,7 @@ public class ExploringState implements RobotStates
 					
 					if(!robot.sensors.isClean(robot.currentX, robot.currentY))
 					{
-						System.out.println("Entering cleaning mode");
+						logger.log(Level.FINE, "Entering cleaning mode");
 						robot.currentState = State.CLEANING.getValue();
 					}
 				}
