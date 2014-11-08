@@ -3,6 +3,7 @@ package app;
 import java.io.File;
 import java.util.Scanner;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import robot.RobotController;
 import robot.RobotController.State;
@@ -36,6 +37,7 @@ public class Main
 	public static boolean startLoop(String[] args)
 	{
 		boolean restart = false;
+		Logger logger = Logger.getLogger("main");
 		String floorPlanLocation = "../Simulation/sample_floorplan.xml";
 		//String floorPlanLocation = "../Simulation/sample_floorplan_small_room.xml";
 		if(args.length == 1)
@@ -43,7 +45,7 @@ public class Main
 		
 		File f = new File(floorPlanLocation);
 		if(f.exists() && !f.isDirectory()) { 
-			System.out.println("file found");
+			logger.log(Level.FINE, "file found");
 			floorPlanLocation = f.getAbsolutePath();
 		}
 		
@@ -92,7 +94,7 @@ public class Main
 				}
 			}
 		}
-		
+		scan.close();
 		return restart;
 	}
 }
