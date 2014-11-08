@@ -26,16 +26,17 @@ public class SensorsController
 		}
 	}
 	
+	public void PrintMemFloorplan(){
+		memory.write();
+	}
 	//this method checks if the given location x and y on the sweepers has been visited
-	public boolean isVisited(int x, int y)
-	{
+	public boolean isVisited(int x, int y){
 		//TODO Do not implement this method without discussion. This might be moved under robot
 		return false;
 	}
 	
 	//returns the celldata object of current cell of x and y
-	public CellData getCell(int x, int y)
-	{
+	public CellData getCell(int x, int y){
 		Coord c = new Coord(x, y);
 		CellData cd = memory.grid.get(c);
 		if ( cd == null ) {
