@@ -108,7 +108,6 @@ public class RobotController extends Thread {
 			} else if (State.GOING_HOME.getValue() == currentState) {
 				new GoingHomeState().execute(this);
 			} else if (State.STOP.getValue() == currentState) {
-				new StopState().execute(this);
 				if (userInputState != State.STOP.getValue()){
 					printStopCommands();
 				}

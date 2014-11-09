@@ -14,8 +14,7 @@ public class ReadyToCleanState implements RobotStates {
 		// power to go half way and back
 		// if sensors are null we cannot see the environment
 		// if dirt controller is null we cannot clean dirt
-		if (robot.getCurrentDirtCapacity() <= 0 || robot.currentPower <= 1
-				|| robot.sensors == null) {
+		if (robot.getCurrentDirtCapacity() <= 0 || robot.currentPower <= 1 || robot.sensors == null) {
 			robot.currentState = State.STOP.getValue();
 		} else {
 			robot.currentState = State.EXPLORING.getValue();

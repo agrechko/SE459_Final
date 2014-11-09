@@ -1,6 +1,7 @@
 package robot;
 
 import robot.RobotController.State;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,7 +9,7 @@ public class GoingHomeState implements RobotStates {
 	Logger logger = Logger.getLogger("main");
 
 	public void execute(RobotController robot) {
-		if (robot.route.size() != 0) {
+		if (!robot.route.isEmpty()) {
 			// 1: x pos, 2: x neg, 3: y pos, 4: y neg
 			int prevStep = robot.route.pop();
 			switch (prevStep) {
@@ -24,6 +25,8 @@ public class GoingHomeState implements RobotStates {
 			case 3:
 				robot.currentY += 1;
 				break;
+			default:
+			    throw new IllegalStateException();
 			}
 			int floorType = robot.sensors.getSurface(robot.currentX,
 					robot.currentY);
