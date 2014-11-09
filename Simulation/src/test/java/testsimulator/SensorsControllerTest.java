@@ -10,90 +10,86 @@ import static org.junit.Assert.*;
 
 public class SensorsControllerTest {
 	String floorPlanLocation = "../Simulation/sample_floorplan.xml";
-    SensorsController sensor = new SensorsController(floorPlanLocation);
-    
-    @Before
-    public void setUp() {
-        sensor.getCell(0, 0); // Setup test cell 
-        sensor.getCell(5, 7); // Setup test cell 
-    }
-    
+	SensorsController sensor = new SensorsController(floorPlanLocation);
+
+	@Before
+	public void setUp() {
+		sensor.getCell(0, 0); // Setup test cell
+		sensor.getCell(5, 7); // Setup test cell
+	}
+
 	@Test
 	public void TestConstructor() {
-		try{
-			assertNotNull(sensor.memory);
-	    	 
-	      } catch ( IllegalArgumentException e ) { 
-	    	   fail(); 
-	      }
-	  }
-	
-	@Test 
-	public  void getPathsTest(){
 		try {
-			int[] expected = {1,2,1,2};
-			int[] Paths = sensor.getPaths(0, 0);
-		    assertArrayEquals( expected, Paths);
-	      } catch ( IllegalArgumentException e ) { 
-    	    fail();
-	      }
-		
+			assertNotNull(sensor.memory);
+
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
 	}
-	
-	
-	@Test 
-	public  void cleanTest(){
+
+	@Test
+	public void getPathsTest() {
+		try {
+			int[] expected = { 1, 2, 1, 2 };
+			int[] Paths = sensor.getPaths(0, 0);
+			assertArrayEquals(expected, Paths);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+
+	}
+
+	@Test
+	public void cleanTest() {
 		CellData cd = sensor.getCell(0, 0);
-		try{
-			int curDirt00 = 1; 
+		try {
+			int curDirt00 = 1;
 			int actualDirt = cd.getDirt();
 			assertTrue(curDirt00 == actualDirt);
 			sensor.clean(0, 0);
-			int newDirt= cd.getDirt();
+			int newDirt = cd.getDirt();
 			assertTrue(0 == newDirt);
-	      } catch ( IllegalArgumentException e ) { 
-	    	  fail();  
-	      }
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
 	}
-	
-	@Test 
+
+	@Test
 	public void isCleanTest() {
-		CellData cd = sensor.getCell(0, 0);
 		try {
 			assertFalse(sensor.isClean(0, 0));
 			sensor.clean(0, 0);
 			assertTrue(sensor.isClean(0, 0));
 			assertFalse(sensor.isClean(5, 7));
 
-		} catch ( IllegalArgumentException e ) { 
-	        fail();
-	    }
-	}
-	
-	
-	@Test 
-	public void SurfaceTest(){
-		int x; int y;
-		try{
-			int currentSurface = sensor.getSurface(0, 0);
-			assertTrue(currentSurface==2);
-			sensor.setSurface(0, 0, 1);//setting a new surface from 2 to 1
-				int newSurface = sensor.getSurface(0, 0);
-				assertTrue(newSurface==1);
-	          } catch ( IllegalArgumentException e ) { 
-	        	 fail();   
-	          }
-			
+		} catch (IllegalArgumentException e) {
+			fail();
 		}
-	
-	@Test 
-	public  void isAllCleanTest() {		
+	}
+
+	@Test
+	public void SurfaceTest() {
 		try {
-			
-			for (Coord xy: sensor.memory.grid.keySet()) {
-			    CellData cd =  sensor.memory.grid.get(xy);
-				while(cd.getDirt() != 0) {
-				     sensor.clean(cd.getCellX(), cd.getCellY());
+			int currentSurface = sensor.getSurface(0, 0);
+			assertTrue(currentSurface == 2);
+			sensor.setSurface(0, 0, 1);// setting a new surface from 2 to 1
+			int newSurface = sensor.getSurface(0, 0);
+			assertTrue(newSurface == 1);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+
+	}
+
+	@Test
+	public void isAllCleanTest() {
+		try {
+
+			for (Coord xy : sensor.memory.grid.keySet()) {
+				CellData cd = sensor.memory.grid.get(xy);
+				while (cd.getDirt() != 0) {
+					sensor.clean(cd.getCellX(), cd.getCellY());
 				}
 			}
 			assertFalse(sensor.isAllClean());
@@ -108,23 +104,22 @@ public class SensorsControllerTest {
 				}
 			}
 			assertTrue(sensor.isAllClean());
-          } catch ( IllegalArgumentException e ) { 
-        	fail();    
-          }
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
 	}
-	
-	@Test 
+
+	@Test
 	public void getChargingStationLocationTest() {
-		
+
 		try {
 			CellData cd = sensor.getChargingStationLocation();
 			CellData cd2 = sensor.getCell(0, 0);
 			assertTrue(cd.equals(cd2));
-          } catch ( IllegalArgumentException e ) { 
-        	    
-          }
-	
+		} catch (IllegalArgumentException e) {
+
+		}
+
 	}
-	
-	
+
 }
