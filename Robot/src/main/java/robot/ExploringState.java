@@ -33,8 +33,7 @@ public class ExploringState implements RobotStates {
 		}
 	}
 	
-	private void choosePathAndMove(RobotController robot)
-	{
+	private void choosePathAndMove(RobotController robot){
 		// allowed indexes of paths to be chosen randomly to go to
 		ArrayList<Integer> pathsIndexes = new ArrayList<Integer>();
 
@@ -102,7 +101,7 @@ public class ExploringState implements RobotStates {
 	}
 
 	private void pickPath(RobotController robot, ArrayList<Integer> paths){
-		while (!selected && paths.size() > 0){
+		while (!selected && !paths.isEmpty()){
 			int selectedIndex = gen.nextInt(paths.size());
 			// gets a random unvisited path
 			selectedPath = paths.get(selectedIndex);
@@ -222,27 +221,27 @@ public class ExploringState implements RobotStates {
 	// looks up the floor type of an adjacent cell to make sure we have enough
 	// power to move there
 	public int getFloorType(RobotController robot, int selectedPath) {
-		int floorType = -1;
+		int floor = -1;
 		switch (selectedPath) {
 		case 0:
-			floorType = robot.sensors.getCell(robot.currentX + 1,
+			floor = robot.sensors.getCell(robot.currentX + 1,
 					robot.currentY).getSurface();
 			break;
 		case 1:
-			floorType = robot.sensors.getCell(robot.currentX - 1,
+			floor = robot.sensors.getCell(robot.currentX - 1,
 					robot.currentY).getSurface();
 			break;
 		case 2:
-			floorType = robot.sensors.getCell(robot.currentX,
+			floor = robot.sensors.getCell(robot.currentX,
 					robot.currentY + 1).getSurface();
 			break;
 		case 3:
-			floorType = robot.sensors.getCell(robot.currentX,
+			floor = robot.sensors.getCell(robot.currentX,
 					robot.currentY - 1).getSurface();
 			break;
 		default:
 		    throw new IllegalStateException();
 		}
-		return floorType;
+		return floor;
 	}
 }

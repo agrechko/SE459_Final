@@ -15,7 +15,8 @@ public class Main {
 	static final int MAX_DIRT_CAPACITY = 50;
 	static final int START_X = 0;
 	static final int START_Y = 0;
-	int command = -1;// command user issues after the clean cycle has ended
+	// command user issues after the clean cycle has ended
+	int command = -1;
 
 	public static void main(String[] args) {
 		ProjectLog pl = new ProjectLog();
