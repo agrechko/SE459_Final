@@ -11,15 +11,15 @@ import sensors.SensorsController;
 import utils.ProjectLog;
 
 public class Main {
-	final static int MAX_POWER = 50;
-	final static int MAX_DIRT_CAPACITY = 50;
-	final static int START_X = 0;
-	final static int START_Y = 0;
+	static final int MAX_POWER = 50;
+	static final int MAX_DIRT_CAPACITY = 50;
+	static final int START_X = 0;
+	static final int START_Y = 0;
 	int command = -1;// command user issues after the clean cycle has ended
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		ProjectLog pl = new ProjectLog();
-		if (args.length == 2 && args[1] == "debug") {
+		if (args.length == 2 && "debug".equals(args[1])) {
 			pl.addConsole();
 		}
 		while (true) {
@@ -33,10 +33,9 @@ public class Main {
 		boolean restart = false;
 		Logger logger = Logger.getLogger("main");
 		String floorPlanLocation = "../Simulation/sample_floorplan.xml";
-		// String floorPlanLocation =
-		// "../Simulation/sample_floorplan_small_room.xml";
-		if (args.length == 1)
+		if (args.length == 1){
 			floorPlanLocation = args[0];
+		}
 
 		File f = new File(floorPlanLocation);
 		if (f.exists() && !f.isDirectory()) {
@@ -46,10 +45,6 @@ public class Main {
 
 		SensorsController sensors = new SensorsController(floorPlanLocation);
 
-		// RobotController robot = new RobotController(sensors, MAX_POWER,
-		// MAX_DIRT_CAPACITY,
-		// sensors.getChargingStationLocation().getCellX(),
-		// sensors.getChargingStationLocation().getCellY());
 		RobotController robot = new RobotController(sensors, MAX_POWER,
 				MAX_DIRT_CAPACITY, 0, 0);
 		robot.start();
@@ -60,10 +55,10 @@ public class Main {
 			String userCommand = scan.nextLine().toLowerCase().trim();
 
 			if (robot.currentState == State.STOP.getValue()) {
-				if (userCommand.equals("restart")) {
+				if ("restart".equals(userCommand)) {
 					restart = true;
 					break;
-				} else if (userCommand.equals("shutdown")) {
+				} else if ("shutdown".equals(userCommand)) {
 					break;
 				} else {
 					System.out
@@ -77,7 +72,7 @@ public class Main {
 				System.out.println("Command not recognized. Please try again.");
 				robot.printAvailableCommands();
 			} else {
-				if (userCommand.equals("stop")) {
+				if ("stop".equals(userCommand)) {
 					break;
 				}
 			}

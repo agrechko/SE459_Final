@@ -8,23 +8,24 @@ import java.util.logging.Logger;
 import sensors.SensorsController;
 
 public class RobotController extends Thread {
-	public boolean devModeOn = false;// used for testing purposes
-	public LinkedList<int[]> devpaths;// hard coded paths for testing
+	// used for testing purposes
+	public boolean devModeOn = false;
+	// hard coded paths for testing
+	public LinkedList<int[]> devpaths;
 	public LinkedList<String> devCommands;
 
 	Logger logger = Logger.getLogger("main");
 
 	SensorsController sensors;
-	boolean firstStart = true;// flag to state if this is the first time
-								// exploring is starting
+	// flag to state if this is the first time exploring is starting
+	boolean firstStart = true;
 	public int currentState = State.READY_TO_CLEAN.getValue();
 	int prevState;
-	int currentPower;// starts at maximum power and counts down to zero which
-						// means we ran out of power
+	// starts at maximum power and counts down to zero which means we ran out of power
+	int currentPower;
 	int maxPower;
-	private int currentDirtCapacity;// starts from maximum dirt capacity and
-									// counts down to zero until no empty space
-									// is left for dirt
+	//starts from maximum dirt capacity and counts down to zero until no empty space is left for dirt
+	private int currentDirtCapacity;
 	int maxDirtCapacity;
 	int currentX;
 	int currentY;
@@ -73,7 +74,7 @@ public class RobotController extends Thread {
 		this.sensors = sensors;
 		this.currentPower = maxPower;
 		this.maxPower = maxPower;
-		this.setCurrentDirtCapacity(maxDirtCapacity);
+		this.currentDirtCapacity = maxDirtCapacity;
 		this.maxDirtCapacity = maxDirtCapacity;
 		this.currentX = startX;
 		this.currentY = startY;
@@ -108,8 +109,9 @@ public class RobotController extends Thread {
 				new GoingHomeState().execute(this);
 			} else if (State.STOP.getValue() == currentState) {
 				new StopState().execute(this);
-				if (userInputState != State.STOP.getValue())
+				if (userInputState != State.STOP.getValue()){
 					printStopCommands();
+				}
 				break;
 			} else if (State.PRINT.getValue() == currentState) {
 				// print the floor plan in print state and set the current state
@@ -132,8 +134,8 @@ public class RobotController extends Thread {
 			} else if (State.EMPTY_ME.getValue() == currentState) {
 				new EmptyMeState().execute(this);
 			} else {
-				System.out.println("Invalid state reached. Exiting...");
-				break;
+				logger.log(Level.FINE, "Invalid state reached. Exiting...");
+				throw new IllegalStateException();
 			}
 		}
 		//prints out the memory floor plan after the clean cycle run
@@ -188,13 +190,13 @@ public class RobotController extends Thread {
 	// return true if the user command has been recognized else false
 	public boolean userInput(String userCommand) {
 		System.out.println("Processing Please Wait...");
-		if (userCommand.equals("stop")) {
+		if ("stop".equals(userCommand)) {
 			userInputState = State.STOP.getValue();
 			userInputWaiting = true;
-		} else if (userCommand.equals("print")) {
+		} else if ("print".equals(userCommand)) {
 			userInputState = State.PRINT.getValue();
 			userInputWaiting = true;
-		} else if (userCommand.equals("empty")) {
+		} else if ("empty".equals(userCommand)) {
 			if (State.WAITING_FOR_COMMAND.getValue() == currentState) {
 				userInputState = State.EMPTY_ME.getValue();
 				userInputWaiting = true;
