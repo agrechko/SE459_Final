@@ -6,17 +6,13 @@ import java.util.logging.*;
 import objectsDTO.CellData;
 import objectsDTO.Coord;
 
-import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
 import java.util.logging.Level;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -27,28 +23,23 @@ import javax.xml.stream.XMLStreamWriter;
 public class FloorPlan {
 	
    Logger logger = Logger.getLogger("main");
-//   private LogFactory logger;
    private FileInputStream inputfile;
    private final static String outputfile = "floorplan.xml";
    private 	String xmlfilename;
-   public HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); //the full floor plan grid that is read in from the xml
+   public HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); 
 
-//	ArrayList<ArrayList<CellData>> grid; 
-//	ArrayList<ArrayList<CellData>> sweeperMemoryGrid;//the floor plan the sweeper encounters
 
 	public FloorPlan() throws IOException {
 	    createInputFileStream();
 	}
 	
-	//Sample floorplan, floorPlanLocation is the physical drive location
 	public FloorPlan(String floorPlanLocation) throws IOException {
 	    try {
 		    xmlfilename = floorPlanLocation;
 		    createInputFileStream();
 			read();
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.toString());
 		}
 	}
 
@@ -56,7 +47,7 @@ public class FloorPlan {
 	    try {
 	    	File f;
 	    	if (xmlfilename == null) {
-	    		f = new File("floorplan.xml"); // System default name
+	    		f = new File("floorplan.xml"); 
 	    	} else {
 		    	f = new File(xmlfilename);
 	    	}
@@ -65,7 +56,6 @@ public class FloorPlan {
 	    	}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			logger.info("ERROR: XML file location does not exist !");
 			throw new IOException();			
 		}
@@ -134,8 +124,7 @@ public class FloorPlan {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.toString());
 		}
 		
 	}
@@ -145,7 +134,6 @@ public class FloorPlan {
 		XMLStreamWriter xtw = null;
 		try {
 			xtw = xof.createXMLStreamWriter(new FileWriter(outputfile));
-//			xtw = xof.createXMLStreamWriter(System.out);
 			xtw.writeStartDocument("1.0");
 			xtw.writeStartElement("home");
 			xtw.writeStartElement("floor");
@@ -175,62 +163,23 @@ public class FloorPlan {
 			xtw.writeEndDocument();
 			xtw.flush();
 			xtw.close();
-//		    System.out.println();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.toString());
 		}
 		
 	}
-	//write arraylist to xml to file
+
 	public HashMap<Coord, CellData> read() throws FileNotFoundException, XMLStreamException {
 		xml2map();
 		return grid;
 	}
 	
-	
-	//write arraylist to xml to file
 	public void write() {
 		try {
 			map2xml();
 		} catch (FileNotFoundException | XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.toString());
 		}
 	}
-	
-	//prints arraylist to console
-	public void print(ArrayList<ArrayList<CellData>> grid) {
-		
-	}
 
-
-	public static void main(String[] args) throws XMLStreamException {
-		try {
-			FloorPlan f = new FloorPlan("sample_floorplan.xml");
-//			HashMap<Coord, CellData> g = f.read();
-			Coord a = new Coord(0,0);
-			Coord b = new Coord(0,0);
-			if (a.equals(b)) {
-				System.out.println("True");
-			} else {
-				System.out.println("False");
-			}
-//			CellData xy = g.get(new Coord(1,2));
-//			System.out.println(xy.getCellX());
-			for (Coord c: f.grid.keySet()) {
-				CellData xy1 = f.grid.get(c);
-				CellData xy2 = f.grid.get(a);
-				if (xy1.getCellX() == 0 && xy1.getCellY() == 0) {
-					System.out.println(a.equals(c));
-					System.out.println(c.getx() + ":" + c.gety());
-					System.out.println(xy2);
-				}
-			}
-			f.write();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

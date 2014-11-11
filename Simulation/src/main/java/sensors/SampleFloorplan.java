@@ -6,8 +6,12 @@ import java.util.HashMap;
 import objectsDTO.CellData;
 import objectsDTO.Coord;
 
+import java.util.logging.Level;
+import java.util.logging.*;
+
 public class SampleFloorplan {
 	
+	Logger logger = Logger.getLogger("main");
 	FloorPlan sample;
 	
 	public SampleFloorplan(String f) {
@@ -15,7 +19,7 @@ public class SampleFloorplan {
 			sample = new FloorPlan(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, e.toString());
 		}
 	}
 

@@ -27,10 +27,10 @@ public class ProjectLog {
 			hdlr.setFormatter(new ProjectLogFormat());
 			logger.addHandler(hdlr);
 			 
-		} catch (IOException ioe) {
-			System.out.println("Unable to open log file: " + ioe);
-		} catch (SecurityException se) {
-			System.out.println("Unable to open log file: " + se);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, e.toString());
+		} catch (SecurityException e) {
+			logger.log(Level.SEVERE, e.toString());
 		}
 
 	}

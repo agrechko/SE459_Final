@@ -44,7 +44,8 @@ public class CellData
 		return paths;
 	}
 	public void setPaths(int[] paths) {
-		this.paths = paths;
+		int[] temp = paths.clone();
+		this.paths = temp;
 	}
 	public boolean isChargingStation() {
 		return chargingStation;
@@ -67,10 +68,8 @@ public class CellData
 	}
 
 	public boolean equals(Object thatObject) {
-		// TODO
 
 		if (!(this.getClass().equals(thatObject.getClass()))) {
-			// or if ( !(thatObject instanceof VideoObj) )
 			return false;
 		}
 		CellData that = (CellData) thatObject;
@@ -80,6 +79,10 @@ public class CellData
 				&& this.paths==that.paths
 				&& this.surface==that.surface	  
 				);
+	}
+
+	public int hashCode() {
+		return ((83 * 31 + cellX) * 31) + cellY;
 	}
 
 }
