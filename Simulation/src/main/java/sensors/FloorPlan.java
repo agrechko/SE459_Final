@@ -1,6 +1,7 @@
 package sensors;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.*;
 
@@ -27,7 +28,7 @@ public class FloorPlan {
    private FileInputStream inputfile;
    private final static String OUTPUTFILE = "floorplan.xml";
    private 	String xmlfilename;
-   private HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); 
+   private Map<Coord, CellData> grid = new HashMap<Coord, CellData>(); 
 
 
 	public FloorPlan() throws IOException {
@@ -35,13 +36,8 @@ public class FloorPlan {
 	}
 	
 	public FloorPlan(String floorPlanLocation) throws IOException {
-	    try {
-		    xmlfilename = floorPlanLocation;
-		    createInputFileStream();
-			read();
-		} catch (XMLStreamException e) {
-			logger.log(Level.SEVERE, "Reading floorplan xml: " + e.toString());
-		}
+	    xmlfilename = floorPlanLocation;
+		createInputFileStream();
 	}
 	
 	public CellData get(Coord c) {
@@ -112,6 +108,8 @@ public class FloorPlan {
 						cd.setChargingStation(true);
 					}
 				break;
+				default:
+				break;
 			}
 		}
 		return cd;
@@ -125,15 +123,11 @@ public class FloorPlan {
 			reader = factory.createXMLStreamReader(inputfile);
 			while (reader.hasNext()) {
 				int event = reader.next();
-				switch(event) {
-			 		case XMLStreamConstants.START_ELEMENT:
+				if (event == XMLStreamConstants.START_ELEMENT) { 
 						if (reader.getLocalName().equalsIgnoreCase("cell")) {
 							CellData cd = parseAttributes(reader);
 							grid.put(new Coord(cd.getCellX(), cd.getCellY()), cd);
 						}
-					break;			
-					case XMLStreamConstants.END_ELEMENT:
-					break;
 				}
 			}
 		} catch (XMLStreamException e) {
@@ -186,7 +180,7 @@ public class FloorPlan {
 		
 	}
 
-	public HashMap<Coord, CellData> read() throws FileNotFoundException, XMLStreamException {
+	public Map<Coord, CellData> read() throws FileNotFoundException, XMLStreamException {
 		xml2map();
 		return grid;
 	}

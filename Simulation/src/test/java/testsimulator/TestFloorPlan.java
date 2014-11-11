@@ -2,6 +2,8 @@ package testsimulator;
 
 import java.io.IOException;
 
+import javax.xml.stream.XMLStreamException;
+
 import org.junit.*;
 
 import static org.junit.Assert.* ;
@@ -13,8 +15,9 @@ import objectsDTO.Coord;
 public class TestFloorPlan {
 	
 	@Test
-	public void testrun() throws IOException {
+	public void testrun() throws IOException, XMLStreamException {
 		FloorPlan f = new FloorPlan("test_floorplan.xml");
+		f.read();
 		CellData cd0 = f.get(new Coord(0,0));
 		assertTrue(cd0 != null);
 		assertTrue(cd0.isChargingStation());

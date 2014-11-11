@@ -1,5 +1,6 @@
 package sensors;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
@@ -8,6 +9,8 @@ import objectsDTO.CellData;
 import objectsDTO.Coord;
 
 import java.util.logging.*;
+
+import javax.xml.stream.XMLStreamException;
 
 public class SampleFloorplan {
 	
@@ -28,6 +31,15 @@ public class SampleFloorplan {
 
 	public Set<Coord> sampleSet() {
 		return sample.gridSet();
+	}
+
+	public void read() {
+		try {
+			sample.read();
+		} catch (FileNotFoundException | XMLStreamException e) {
+			logger.log(Level.SEVERE, "Reading sameple floorplan xml file: " + e.toString());
+		}
+		
 	}
 	
 }

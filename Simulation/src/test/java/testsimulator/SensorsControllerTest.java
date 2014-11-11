@@ -14,6 +14,7 @@ public class SensorsControllerTest {
 
 	@Before
 	public void setUp() {
+		sensor.setup();
 		sensor.getCell(0, 0); // Setup test cell
 		sensor.getCell(5, 7); // Setup test cell
 	}

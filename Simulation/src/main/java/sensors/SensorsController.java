@@ -1,10 +1,13 @@
 package sensors;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.stream.XMLStreamException;
 
 import objectsDTO.CellData;
 import objectsDTO.Coord;
@@ -22,6 +25,10 @@ public class SensorsController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setup() {
+		sample.read();
 	}
 
 	public void PrintMemFloorplan() {

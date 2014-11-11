@@ -23,6 +23,7 @@ public class ExploringStateTest
 
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest1.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		
@@ -44,6 +45,7 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest2.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 
@@ -65,6 +67,7 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest3.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 
@@ -86,6 +89,7 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest4.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 
@@ -107,6 +111,7 @@ public class ExploringStateTest
 		
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest5.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 

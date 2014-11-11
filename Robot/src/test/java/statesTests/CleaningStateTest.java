@@ -23,6 +23,7 @@ import sensors.SensorsController;
  *
  */
 public class CleaningStateTest {
+	
 
 	@SuppressWarnings("unchecked")
 	@Test
@@ -36,6 +37,7 @@ public class CleaningStateTest {
 		
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest4.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 
@@ -57,6 +59,7 @@ public class CleaningStateTest {
 
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest1.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		
@@ -79,6 +82,7 @@ public class CleaningStateTest {
 
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest1.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
+		sensors.setup();
 		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 		
@@ -100,7 +104,8 @@ public class CleaningStateTest {
 			
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest4.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-			
+		sensors.setup();
+		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 
 		assertTrue(sensors.isClean(2, 1) == false);
@@ -122,7 +127,8 @@ public class CleaningStateTest {
 			
 		String floorPlanLocation = "../Simulation/sample_floorplan_exploreTest4.xml";
 		SensorsController sensors = new SensorsController(floorPlanLocation);
-			
+		sensors.setup();
+		
 		RobotController robot = new RobotController(sensors, MAX_POWER, MAX_DIRT_CAPACITY, START_X, START_Y);
 
 		assertTrue(sensors.isAllClean() == false);
