@@ -15,7 +15,7 @@ public class TestFloorPlan {
 	@Test
 	public void testrun() throws IOException {
 		FloorPlan f = new FloorPlan("test_floorplan.xml");
-		CellData cd0 = f.grid.get(new Coord(0,0));
+		CellData cd0 = f.get(new Coord(0,0));
 		assertTrue(cd0 != null);
 		assertTrue(cd0.isChargingStation());
 		assertEquals(cd0.getCellX(), 0);
@@ -28,7 +28,7 @@ public class TestFloorPlan {
 			assertEquals(i, testIntArray1[count]);
 			count++;
 		}
-		CellData cd1 = f.grid.get(new Coord(1, 0));
+		CellData cd1 = f.get(new Coord(1, 0));
 		assertTrue(cd1 != null);
 		assertFalse(cd1.isChargingStation());
 		assertEquals(cd1.getCellX(), 1);

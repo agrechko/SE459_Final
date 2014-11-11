@@ -1,10 +1,22 @@
 package utils;
 
-public final class Path {
+public enum Path {
 	
-	static final int UNKNOWN = 0;
-	static final int OPEN = 1;
-	static final int OBSTACLE = 2;
-	static final int STAIRS = 4;
+	UNKNOWN(0), OPEN(1), OBSTACLE(2), STAIRS(4);
+	private int value;
 	
+	private Path(int value) {
+		this.value = value;
+	}
+	
+	public static void main(String arg[]) {
+		Path p = Path.OBSTACLE;
+		System.out.println(p);
+		if (p.value == 2) {
+			System.out.println(p + " = 2");
+		}
+	}
 }
+
+
+

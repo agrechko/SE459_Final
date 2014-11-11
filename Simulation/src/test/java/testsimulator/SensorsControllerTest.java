@@ -86,8 +86,8 @@ public class SensorsControllerTest {
 	public void isAllCleanTest() {
 		try {
 
-			for (Coord xy : sensor.memory.grid.keySet()) {
-				CellData cd = sensor.memory.grid.get(xy);
+			for (Coord xy : sensor.memory.gridSet()) {
+				CellData cd = sensor.memory.get(xy);
 				while (cd.getDirt() != 0) {
 					sensor.clean(cd.getCellX(), cd.getCellY());
 				}

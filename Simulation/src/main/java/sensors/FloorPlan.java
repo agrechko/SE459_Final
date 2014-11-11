@@ -1,6 +1,7 @@
 package sensors;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.*;
 
 import objectsDTO.CellData;
@@ -11,8 +12,8 @@ import java.io.FileWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.util.logging.Level;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -24,9 +25,9 @@ public class FloorPlan {
 	
    Logger logger = Logger.getLogger("main");
    private FileInputStream inputfile;
-   private final static String outputfile = "floorplan.xml";
+   private final static String OUTPUTFILE = "floorplan.xml";
    private 	String xmlfilename;
-   public HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); 
+   private HashMap<Coord, CellData> grid = new HashMap<Coord, CellData>(); 
 
 
 	public FloorPlan() throws IOException {
@@ -41,6 +42,18 @@ public class FloorPlan {
 		} catch (XMLStreamException e) {
 			logger.log(Level.SEVERE, "Reading floorplan xml: " + e.toString());
 		}
+	}
+	
+	public CellData get(Coord c) {
+		return grid.get(c);
+	}
+
+	public void put(Coord c, CellData cd) {
+		grid.put(c, cd);
+	}
+
+	public Set<Coord> gridSet() {
+		return grid.keySet();
 	}
 
 	private void createInputFileStream() throws IOException {
@@ -135,7 +148,7 @@ public class FloorPlan {
 		XMLOutputFactory xof = XMLOutputFactory.newInstance();
 		XMLStreamWriter xtw = null;
 		try {
-			xtw = xof.createXMLStreamWriter(new FileWriter(outputfile));
+			xtw = xof.createXMLStreamWriter(new FileWriter(OUTPUTFILE));
 			xtw.writeStartDocument("1.0");
 			xtw.writeStartElement("home");
 			xtw.writeStartElement("floor");

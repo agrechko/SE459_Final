@@ -2,11 +2,11 @@ package sensors;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Set;
 
 import objectsDTO.CellData;
 import objectsDTO.Coord;
 
-import java.util.logging.Level;
 import java.util.logging.*;
 
 public class SampleFloorplan {
@@ -23,11 +23,11 @@ public class SampleFloorplan {
 	}
 
 	public CellData getcell(int x, int y) {
-		return sample.grid.get(new Coord(x, y));
-	}
-	
-	public HashMap<Coord, CellData> getgrid() {
-		return sample.grid;
+		return sample.get(new Coord(x, y));
 	}
 
+	public Set<Coord> sampleSet() {
+		return sample.gridSet();
+	}
+	
 }
