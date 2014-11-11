@@ -21,7 +21,7 @@ public class SampleFloorplan {
 		try {
 			sample = new FloorPlan(f);
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Reading sameple floorplan xml file: " + e.toString());
+			logger.log(Level.SEVERE, "Reading sameple floorplan xml file: " + e);
 		}
 	}
 
@@ -37,7 +37,7 @@ public class SampleFloorplan {
 		try {
 			sample.read();
 		} catch (FileNotFoundException | XMLStreamException e) {
-			logger.log(Level.SEVERE, "Reading sameple floorplan xml file: " + e.toString());
+			logger.log(Level.SEVERE, "Reading sameple floorplan xml file: " + e);
 		}
 		
 	}

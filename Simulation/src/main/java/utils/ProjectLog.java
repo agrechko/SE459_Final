@@ -28,9 +28,9 @@ public class ProjectLog {
 			logger.addHandler(hdlr);
 			 
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "IOException on log file handle: " + e.toString());
+			logger.log(Level.SEVERE, "IOException on log file handle: " + e);
 		} catch (SecurityException e) {
-			logger.log(Level.SEVERE, "SecurityException on log file handle: " + e.toString());
+			logger.log(Level.SEVERE, "SecurityException on log file handle: " + e);
 		}
 
 	}

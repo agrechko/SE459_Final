@@ -22,8 +22,7 @@ public class SensorsController {
 			memory = new FloorPlan();
 			sample = new SampleFloorplan(floorPlanPath);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Error in sensor setup: " + e);
 		}
 	}
 	
