@@ -39,7 +39,7 @@ public class FloorPlan {
 		    createInputFileStream();
 			read();
 		} catch (XMLStreamException e) {
-			logger.log(Level.SEVERE, e.toString());
+			logger.log(Level.SEVERE, "Reading floorplan xml: " + e.toString());
 		}
 	}
 
@@ -123,13 +123,15 @@ public class FloorPlan {
 					break;
 				}
 			}
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.toString());
-		}
+		} catch (XMLStreamException e) {
+			logger.log(Level.SEVERE, "Reading XML from floorplan file: " + e.toString());
+		} catch (FileNotFoundException e) {
+		    logger.log(Level.SEVERE, "Opening floorplan xml for reading: " + e.toString());
+	    }
 		
 	}
 	
-	private void map2xml() throws XMLStreamException, FileNotFoundException {
+	private void map2xml() throws XMLStreamException, IOException {
 		XMLOutputFactory xof = XMLOutputFactory.newInstance();
 		XMLStreamWriter xtw = null;
 		try {
@@ -163,9 +165,11 @@ public class FloorPlan {
 			xtw.writeEndDocument();
 			xtw.flush();
 			xtw.close();
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.toString());
-		}
+		} catch (XMLStreamException e) {
+			logger.log(Level.SEVERE, "Writing XML to file: " + e.toString());
+		} catch (IOException e) {
+		    logger.log(Level.SEVERE, "Opening floorplan xml file for writing: " + e.toString());
+	    }
 		
 	}
 
@@ -177,9 +181,11 @@ public class FloorPlan {
 	public void write() {
 		try {
 			map2xml();
-		} catch (FileNotFoundException | XMLStreamException e) {
-			logger.log(Level.SEVERE, e.toString());
-		}
+		} catch (XMLStreamException e) {
+			logger.log(Level.SEVERE, "Writing XML from file: " + e.toString());
+		} catch (IOException e) {
+		    logger.log(Level.SEVERE, "Opening floorplan file for writing: " + e.toString());
+	    }
 	}
 
 }

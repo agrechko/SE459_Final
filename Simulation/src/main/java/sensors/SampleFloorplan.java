@@ -18,8 +18,7 @@ public class SampleFloorplan {
 		try {
 			sample = new FloorPlan(f);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			logger.log(Level.SEVERE, e.toString());
+			logger.log(Level.SEVERE, "Reading sameple floorplan xml file: " + e.toString());
 		}
 	}
 
