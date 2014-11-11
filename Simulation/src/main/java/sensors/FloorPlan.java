@@ -65,7 +65,7 @@ public class FloorPlan {
 	    	}
 			
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "ERROR: XML file location does not exist: " + e);
+			logger.log(Level.SEVERE, "ERROR: XML file location does not exist: ", e);
 			throw new IOException();			
 		}
 
@@ -131,9 +131,9 @@ public class FloorPlan {
 				}
 			}
 		} catch (XMLStreamException e) {
-			logger.log(Level.SEVERE, "Reading XML from floorplan file: " + e);
+			logger.log(Level.SEVERE, "Reading XML from floorplan file: ", e);
 		} catch (FileNotFoundException e) {
-		    logger.log(Level.SEVERE, "Opening floorplan xml for reading: " + e);
+		    logger.log(Level.SEVERE, "Opening floorplan xml for reading: ", e);
 	    }
 		
 	}
@@ -173,9 +173,9 @@ public class FloorPlan {
 			xtw.flush();
 			xtw.close();
 		} catch (XMLStreamException e) {
-			logger.log(Level.SEVERE, "Writing XML to file: " + e);
+			logger.log(Level.SEVERE, "Writing XML to file: ", e);
 		} catch (IOException e) {
-		    logger.log(Level.SEVERE, "Opening floorplan xml file for writing: " + e);
+		    logger.log(Level.SEVERE, "Opening floorplan xml file for writing: ", e);
 	    }
 		
 	}
@@ -189,9 +189,9 @@ public class FloorPlan {
 		try {
 			map2xml();
 		} catch (XMLStreamException e) {
-			logger.log(Level.SEVERE, "Writing XML from file: " + e);
+			logger.log(Level.SEVERE, "Writing XML from file: ", e);
 		} catch (IOException e) {
-		    logger.log(Level.SEVERE, "Opening floorplan file for writing: " + e);
+		    logger.log(Level.SEVERE, "Opening floorplan file for writing: ", e);
 	    }
 	}
 
