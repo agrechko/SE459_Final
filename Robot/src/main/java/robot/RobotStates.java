@@ -1,6 +1,5 @@
 package robot;
 
-public interface RobotStates 
-{
-	public void execute(RobotController robot);
+public interface RobotStates {
+	void execute(RobotController robot);
 }
