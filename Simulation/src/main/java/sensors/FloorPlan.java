@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.*;
 
-import objectsDTO.CellData;
-import objectsDTO.Coord;
+import objectsdto.CellData;
+import objectsdto.Coord;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -139,6 +139,10 @@ public class FloorPlan {
 	}
 	
 	private void map2xml() throws XMLStreamException, IOException {
+	    /*
+		 * Example of xml cell data 
+		 * <cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
+		 */		
 		XMLOutputFactory xof = XMLOutputFactory.newInstance();
 		XMLStreamWriter xtw = null;
 		try {
@@ -149,7 +153,6 @@ public class FloorPlan {
 			xtw.writeAttribute("level", "1");
 			for (Coord c: grid.keySet()) {
 				CellData cd = grid.get(c);
-//	 			<cell xs='7' ys='8' ss='1' ps='2121 ' ds='1' cs='0' />
 				xtw.writeStartElement("cell");
 				xtw.writeAttribute("xs", Integer.toString(cd.getCellX()));
 				xtw.writeAttribute("ys", Integer.toString(cd.getCellY()));

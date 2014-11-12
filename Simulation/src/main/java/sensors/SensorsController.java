@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
 
-import objectsDTO.CellData;
-import objectsDTO.Coord;
+import objectsdto.CellData;
+import objectsdto.Coord;
 
 public class SensorsController {
 	public FloorPlan memory;

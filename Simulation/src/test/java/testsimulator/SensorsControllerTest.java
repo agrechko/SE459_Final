@@ -1,6 +1,6 @@
 package testsimulator;
-import objectsDTO.CellData;
-import objectsDTO.Coord;
+import objectsdto.CellData;
+import objectsdto.Coord;
 import sensors.SensorsController;
 
 import org.junit.Before;

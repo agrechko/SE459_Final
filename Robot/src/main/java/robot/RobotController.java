@@ -128,7 +128,7 @@ public class RobotController extends Thread {
 				try {
 					sleep(3000);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					logger.log(Level.WARNING, "Sleep interupted: ", e);
 				}
 			} else if (State.EMPTY_ME.getValue() == currentState) {
 				new EmptyMeState().execute(this);

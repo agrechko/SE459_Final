@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 
-import objectsDTO.CellData;
-import objectsDTO.Coord;
+import objectsdto.CellData;
+import objectsdto.Coord;
 
 import java.util.logging.*;
 
