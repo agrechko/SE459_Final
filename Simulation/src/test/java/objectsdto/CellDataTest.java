@@ -41,10 +41,5 @@ public class CellDataTest {
 		int[] s = new int[] {1,2,1,1};
 		t1.setPaths(s);		
 		assertNotSame(t1, cd);
-		List l = new List();
-		assertNotSame(t1, l);
-		
-		
 	}
-
 }
