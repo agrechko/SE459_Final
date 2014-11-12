@@ -19,8 +19,12 @@ public class CoordTest {
 		assertEquals(8, c.gety());
 		Coord b = new Coord(5, 6);
 		assertNotSame(b, c);
-		Coord a = new Coord(7, 8);
+		assertNotSame(null, c);
+		Coord a = new Coord();
+		a.setx(7);
+		a.sety(8);
 		assertEquals(a.hashCode(), c.hashCode()); 
+		assertEquals(a, c);
 	}
 
 }

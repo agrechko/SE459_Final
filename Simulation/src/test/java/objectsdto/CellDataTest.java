@@ -2,9 +2,9 @@ package objectsdto;
 
 import static org.junit.Assert.*;
 
+import java.awt.List;
+
 import org.junit.*;
-import org.junit.Before;
-import org.junit.Test;
 
 public class CellDataTest {
 	CellData cd;
@@ -30,6 +30,20 @@ public class CellDataTest {
 		for (int i=0; i < 4;i++) {
 			assertEquals(t[i], cd.getPaths()[i]);
 		}
+		int[] p = new int[] {1,2,1,4};
+		CellData t1 = new CellData(5, 6);
+		t1.setChargingStation(false);
+		t1.setDirt(4);
+		t1.setPaths(p);
+		t1.setSurface(2);
+		assertEquals(t1, cd);
+		assertEquals(t1.hashCode(), cd.hashCode());
+		int[] s = new int[] {1,2,1,1};
+		t1.setPaths(s);		
+		assertNotSame(t1, cd);
+		List l = new List();
+		assertNotSame(t1, l);
+		
 		
 	}
 
