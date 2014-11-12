@@ -1,7 +1,6 @@
-package objectsDTO;
+package objectsdto;
 
-public class CellData 
-{
+public class CellData {
 	int surface = -1;
 	int dirt= -1;
 	int[] paths = null;
@@ -63,6 +62,7 @@ public class CellData
 		sb.append("y: " + y + " ");
 		sb.append("ss: " + surface + " ");
 		sb.append("ds: " + dirt);
+		sb.append("ps: " + paths);
 		
 		return sb.toString();
 	}
@@ -73,11 +73,17 @@ public class CellData
 			return false;
 		}
 		CellData that = (CellData) thatObject;
+		for (int i=0; i < 4; i++) {
+			if (this.paths[i] != that.paths[i]) {
+				return false;
+			}
+		}
+		
 		return ( this.cellX == that.cellX
 				&& this.cellY==that.cellY    
-				&& this.dirt== that.dirt 
-				&& this.paths==that.paths
-				&& this.surface==that.surface	  
+				&& this.dirt== that.dirt 				
+				&& this.surface==that.surface
+				&& this.isChargingStation() == that.isChargingStation() 
 				);
 	}
 

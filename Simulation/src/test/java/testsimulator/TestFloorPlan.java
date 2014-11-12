@@ -8,8 +8,8 @@ import org.junit.*;
 
 import static org.junit.Assert.* ;
 import sensors.FloorPlan;
-import objectsDTO.CellData;
-import objectsDTO.Coord;
+import objectsdto.CellData;
+import objectsdto.Coord;
 
 
 public class TestFloorPlan {
@@ -43,6 +43,12 @@ public class TestFloorPlan {
 		for (int i: cd1.getPaths()) {
 			assertEquals(i, testIntArray2[count]);
 			count++;
+		}
+		f.write();
+		FloorPlan t = new FloorPlan("floorplan.xml");
+		t.read();
+		for (Coord c: t.gridSet()) {
+			assertEquals(f.get(c), t.get(c));
 		}
 		
 	}

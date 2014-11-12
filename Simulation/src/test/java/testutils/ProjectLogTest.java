@@ -12,7 +12,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 
-public class ProjectTest {
+public class ProjectLogTest {
 	ProjectLog pl = new ProjectLog();
 	Logger l = Logger.getLogger("main");
 			

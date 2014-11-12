@@ -1,4 +1,4 @@
-package objectsDTO;
+package objectsdto;
 
 public class Coord {
 	int x;
