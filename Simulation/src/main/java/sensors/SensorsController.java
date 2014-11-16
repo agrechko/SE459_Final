@@ -142,4 +142,11 @@ public class SensorsController {
 		}
 		return null;
 	}
+	
+	//only knows about information in memory
+	public CellData getCellMemory(int x, int y) {
+		Coord c = new Coord(x, y);
+		CellData cd = memory.get(c);
+		return cd;
+	}
 }
