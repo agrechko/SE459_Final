@@ -202,8 +202,7 @@ public class RobotController extends Thread {
                 userInputState = State.EMPTY_ME.getValue();
                 userInputWaiting = true;
             } else {
-                System.out
-                        .println("Unable to perform empty action at this time");
+                System.out.println("Unable to perform empty action at this time");
             }
         } else {
             return false;
@@ -228,11 +227,9 @@ public class RobotController extends Thread {
 
     public final void printAvailableCommands() {
         System.out.println("Available command:");
-        System.out
-                .println("Print - prints the current state of the floor plan");
-        System.out.println("Stop - stops the current clean cycle");
-        System.out
-                .println("Empty - to empty the dirt cargo bay and continue cleaning");
+        System.out.println("Print - prints the current state of the floor plan");
+        System.out.println("Stop - stop and reset the current clean cycle");
+        System.out.println("Empty - to empty the dirt cargo bay and continue cleaning");
     }
 
     public final void printStopCommands() {
