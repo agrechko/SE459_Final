@@ -1,13 +1,8 @@
 package sensors;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.xml.stream.XMLStreamException;
 
 import objectsdto.CellData;
 import objectsdto.Coord;
