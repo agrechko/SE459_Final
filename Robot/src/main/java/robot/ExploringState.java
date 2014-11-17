@@ -27,17 +27,17 @@ public class ExploringState implements RobotStates {
         } else {
             if (robot.currentPower <= (robot.maxPower / 2)) {
                 robot.currentState = State.GOING_HOME.getValue();
-            } 
-            //go directly to dirty cell
-            else if (!robot.pathToDirtyCell.isEmpty()){
-            	int selectedPath = robot.pathToDirtyCell.poll();
-            	floorType = getFloorType(robot, selectedPath);
-            	if(checkIfEnoughPowerToMove(robot, floorType)){
-            		move(robot, selectedPath);
+            }
+            // go directly to dirty cell
+            else if (!robot.pathToDirtyCell.isEmpty()) {
+                int selectedPath = robot.pathToDirtyCell.poll();
+                floorType = getFloorType(robot, selectedPath);
+                if (checkIfEnoughPowerToMove(robot, floorType)) {
+                    move(robot, selectedPath);
                     robot.currentPower -= robot.getPowerConsumption(floorType);
-            	}
+                }
             } else {
-            	choosePathAndMove(robot);
+                choosePathAndMove(robot);
             }
         }
     }
@@ -91,7 +91,11 @@ public class ExploringState implements RobotStates {
         }
 
         if (robot.currentState != State.GOING_HOME.getValue()) {
-            logger.log(Level.FINE,"Currently: "+ robot.sensors.getCell(robot.currentX, robot.currentY));
+            logger.log(
+                    Level.FINE,
+                    "Currently: "
+                            + robot.sensors.getCell(robot.currentX,
+                                    robot.currentY));
             robot.currentPower -= robot.getPowerConsumption(floorType);
 
             if (robot.sensors.getCell(robot.currentX, robot.currentY)
@@ -148,7 +152,8 @@ public class ExploringState implements RobotStates {
         }
     }
 
-    private boolean checkIfEnoughPowerToMove(final RobotController robot, final int floor) {
+    private boolean checkIfEnoughPowerToMove(final RobotController robot,
+            final int floor) {
         return robot.currentPower - robot.getPowerConsumption(floor) > robot.maxPower / 2;
     }
 
