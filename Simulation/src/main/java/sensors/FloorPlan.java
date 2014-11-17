@@ -148,31 +148,62 @@ public class FloorPlan {
         try {
             xtw = xof.createXMLStreamWriter(new FileWriter(OUTPUTFILE));
             xtw.writeStartDocument("1.0");
+            xtw.writeCharacters("\r\n");
             xtw.writeStartElement("home");
+            xtw.writeCharacters("\r\n");
             xtw.writeStartElement("floor");
             xtw.writeAttribute("level", "1");
-            for (Coord c : grid.keySet()) {
-                CellData cd = grid.get(c);
-                xtw.writeStartElement("cell");
-                xtw.writeAttribute("xs", Integer.toString(cd.getCellX()));
-                xtw.writeAttribute("ys", Integer.toString(cd.getCellY()));
-                xtw.writeAttribute("ss", Integer.toString(cd.getSurface()));
-                StringBuilder sb = new StringBuilder();
-                for (int i : cd.getPaths()) {
-                    sb.append(Integer.toString(i));
-                }
-                xtw.writeAttribute("ps", sb.toString());
-                xtw.writeAttribute("ds", Integer.toString(cd.getDirt()));
-                if (cd.isChargingStation()) {
-                    xtw.writeAttribute("cs", "1");
-                } else {
-                    xtw.writeAttribute("cs", "0");
-                }
-                xtw.writeEndElement();
+            xtw.writeCharacters("\r\n");
+            for (int i=0; i < 1000; i++) {
+            	for (int j=0; j < 1000; j++) {
+	                CellData cd = grid.get(new Coord(j, i));
+	                if (cd != null) {
+		                xtw.writeStartElement("cell");
+		                xtw.writeAttribute("xs", Integer.toString(cd.getCellX()));
+		                xtw.writeAttribute("ys", Integer.toString(cd.getCellY()));
+		                xtw.writeAttribute("ss", Integer.toString(cd.getSurface()));
+		                StringBuilder sb = new StringBuilder();
+		                for (int p : cd.getPaths()) {
+		                    sb.append(Integer.toString(p));
+		                }
+		                xtw.writeAttribute("ps", sb.toString());
+		                xtw.writeAttribute("ds", Integer.toString(cd.getDirt()));
+		                if (cd.isChargingStation()) {
+		                    xtw.writeAttribute("cs", "1");
+		                } else  	{
+		                    xtw.writeAttribute("cs", "0");
+		                }
+		                xtw.writeEndElement();
+		                xtw.writeCharacters("\r\n");
+	                }
+            	}
             }
+//            for (Coord c : grid.keySet()) {
+//                CellData cd = grid.get(c);
+//                xtw.writeStartElement("cell");
+//                xtw.writeAttribute("xs", Integer.toString(cd.getCellX()));
+//                xtw.writeAttribute("ys", Integer.toString(cd.getCellY()));
+//                xtw.writeAttribute("ss", Integer.toString(cd.getSurface()));
+//                StringBuilder sb = new StringBuilder();
+//                for (int i : cd.getPaths()) {
+//                    sb.append(Integer.toString(i));
+//                }
+//                xtw.writeAttribute("ps", sb.toString());
+//                xtw.writeAttribute("ds", Integer.toString(cd.getDirt()));
+//                if (cd.isChargingStation()) {
+//                    xtw.writeAttribute("cs", "1");
+//                } else  	{
+//                    xtw.writeAttribute("cs", "0");
+//                }
+//                xtw.writeEndElement();
+//                xtw.writeCharacters("\r\n");
+//            }
             xtw.writeEndElement();
+            xtw.writeCharacters("\r\n");
             xtw.writeEndElement();
+            xtw.writeCharacters("\r\n");
             xtw.writeEndDocument();
+            xtw.writeCharacters("\r\n");
             xtw.flush();
             xtw.close();
         } catch (XMLStreamException e) {

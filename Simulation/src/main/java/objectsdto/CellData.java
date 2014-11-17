@@ -73,8 +73,12 @@ public class CellData {
         sb.append("x: " + x + " ");
         sb.append("y: " + y + " ");
         sb.append("ss: " + surface + " ");
-        sb.append("ds: " + dirt);
-        sb.append("ps: " + paths);
+        sb.append("ds: " + dirt + " ");
+        StringBuilder s = new StringBuilder();
+        for ( int i: paths) {
+        	s.append(i);
+        }
+        sb.append("ps: " + s);
 
         return sb.toString();
     }

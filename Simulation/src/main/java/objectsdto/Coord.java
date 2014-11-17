@@ -33,6 +33,9 @@ public class Coord {
     }
 
     public final int hashCode() {
-        return ((17 * 31 + x) * 31) + y;
+    	int s = 17;
+    	int a = (31 * x) + x + 11;
+    	int b = (41 * y) + y + 29;
+        return (s + a + b);	
     }
 }
