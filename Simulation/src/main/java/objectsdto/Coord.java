@@ -1,46 +1,38 @@
 package objectsdto;
 
 public class Coord {
-	int x;
-	int y;
-	
-	public Coord(int a, int b) {
-	    	x = a;
-	    	y = b;
-	}
-	
-	public Coord() { }
-	
-	public void setx(int a) {
-		x = a;
-	}
+    int x;
+    int y;
 
-	public void sety(int b) {
-		y = b;
-	}
+    public Coord(final int a, final int b) {
+        x = a;
+        y = b;
+    }
 
-	public int getx() {
-		return x;
-	}
+    public Coord() {
+    }
 
-	public int gety() {
-		return y;
-	}
+    public final void setx(final int a) {
+        x = a;
+    }
 
-	public boolean equals(Object c) {
-		if (c == null) {
-		    return false;	
-		} else {
-			Coord temp = (Coord) c;
-			if ((this.x == temp.x) && (this.y == temp.y)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-	
-	public int hashCode() {
-		return ((17 * 31 + x) * 31) + y;
-	}
+    public final void sety(final int b) {
+        y = b;
+    }
+
+    public final int getx() {
+        return x;
+    }
+
+    public final int gety() {
+        return y;
+    }
+
+    public final boolean equals(final Object c) {
+        return !(c == null);
+    }
+
+    public final int hashCode() {
+        return ((17 * 31 + x) * 31) + y;
+    }
 }
