@@ -30,7 +30,7 @@ public class ExploringState implements RobotStates {
             }
             // go directly to dirty cell
             else if (!robot.pathToDirtyCell.isEmpty()) {
-                int selectedPath = robot.pathToDirtyCell.poll();
+                int selectedPath = robot.pathToDirtyCell.pollLast();
                 floorType = getFloorType(robot, selectedPath);
                 if (checkIfEnoughPowerToMove(robot, floorType)) {
                     move(robot, selectedPath);
@@ -240,19 +240,19 @@ public class ExploringState implements RobotStates {
         switch (selectedPath) {
         case 0:
             floor = robot.sensors.getCell(robot.currentX + 1, robot.currentY)
-                    .getSurface();
+            		.getSurface();
             break;
         case 1:
             floor = robot.sensors.getCell(robot.currentX - 1, robot.currentY)
-                    .getSurface();
+            		.getSurface();
             break;
         case 2:
             floor = robot.sensors.getCell(robot.currentX, robot.currentY + 1)
-                    .getSurface();
+            		.getSurface();
             break;
         case 3:
             floor = robot.sensors.getCell(robot.currentX, robot.currentY - 1)
-                    .getSurface();
+            		.getSurface();
             break;
         default:
             throw new IllegalStateException();

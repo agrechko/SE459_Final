@@ -23,9 +23,10 @@ public class ReadyToCleanState implements RobotStates {
                 || robot.sensors == null) {
             robot.currentState = State.STOP.getValue();
         } else {
-            // if(!robot.firstStart && !robot.sensors.isAllClean()) {
-            // findClosestDirt(robot);
-            // }
+//             if(!robot.firstStart && !robot.sensors.isAllClean()) {
+//            	 robot.pathToDirtyCell.clear();
+//            	 findClosestDirt(robot);
+//             }
             robot.currentState = State.EXPLORING.getValue();
         }
     }
@@ -41,7 +42,7 @@ public class ReadyToCleanState implements RobotStates {
         HashMap<String, String> visited = new HashMap<String, String>();
         // string current cell reverse direction pointing to parent which leads
         // to home
-        HashMap<String, Integer> directionToParent = new HashMap<String, Integer>();
+        HashMap<String, Integer> directionFromParentToChild = new HashMap<String, Integer>();
         boolean found = false;
         CellData cur = null;
         CellData start = robot.sensors.getCell(0, 0);
@@ -71,35 +72,37 @@ public class ReadyToCleanState implements RobotStates {
                             visited.put(
                                     cell.getCellX() + "," + cell.getCellY(),
                                     cur.getCellX() + "," + cur.getCellY());
-                            directionToParent.put(
+                            directionFromParentToChild.put(
                                     cell.getCellX() + "," + cell.getCellY(), i);
                         }
                     }
                 }
             }
         }
-
+        
+        if(found){
         robot.pathToDirtyCell = getDirtPathForCell(robot, parent,
-                directionToParent, cur);
+                directionFromParentToChild, cur);
+        }
     }
 
     // finds the path to the dirty cell
     private LinkedList<Integer> getDirtPathForCell(final RobotController robot,
             final HashMap<String, CellData> parent,
-            final HashMap<String, Integer> directionToParent,
+            final HashMap<String, Integer> directionFromParentToChild,
             final CellData cell) {
         LinkedList<Integer> dirtPath = new LinkedList<Integer>();
 
         CellData cur = cell;
 
         while (parent.get(cur.getCellX() + "," + cur.getCellY()) != null) {
-            dirtPath.add(directionToParent.get(cur.getCellX() + ","
+            dirtPath.add(directionFromParentToChild.get(cur.getCellX() + ","
                     + cur.getCellY()));
             cur = parent.get(cur.getCellX() + "," + cur.getCellY());
         }
         // removes the last step because exploring logic should pick it up from
         // there
-        dirtPath.pollLast();
+        dirtPath.poll();
         return dirtPath;
     }
 
